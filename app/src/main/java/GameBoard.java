@@ -24,6 +24,7 @@ public class GameBoard {
      */
     public GameBoard(int _reihen, int _spalten)
     {
+        // IV setzen
         this.reihen = _reihen;
         this.spalten = _spalten;
         this.gitter = new int[this.reihen][this.spalten];

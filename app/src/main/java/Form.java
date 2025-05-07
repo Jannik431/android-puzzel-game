@@ -13,7 +13,7 @@ public class Form {
     private int hoehe;
 
     /**
-     * Form
+     * Referenz auf die Form
      */
     private int [][] form;
 
