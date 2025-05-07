@@ -24,6 +24,7 @@ public class Form {
      */
     public Form(int _breite, int _hoehe)
     {
+        // IV setzen
         this.breite = _breite;
         this.hoehe = _hoehe;
         this.form = new int[this.breite][this.hoehe];
