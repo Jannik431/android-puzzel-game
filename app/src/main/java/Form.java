@@ -19,14 +19,12 @@ public class Form {
 
     /**
      * Konstruktor der Klasse Form, der ein Form-Objekt erzeugt
-     * @param _breite Breite der Form
-     * @param _hoehe Höhe der Form
+     * @param form Form die erzeugt werden soll
      */
-    public Form(int _breite, int _hoehe)
+    public Form(int[][] form)
     {
-        // IV setzen und test
-        this.breite = _breite;
-        this.hoehe = _hoehe;
-        this.form = new int[this.breite][this.hoehe];
+        this.form = form;
+        this.hoehe = form.length;
+        this.breite = form[0].length;
     }
 }
