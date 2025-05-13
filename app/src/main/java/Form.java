@@ -41,7 +41,7 @@ public class Form {
      * Methode gibt die Höhe der Form
      * @return Höhe
      */
-    public int getFormHoehe()
+    public int getHoehe()
     {
         return this.hoehe;
     }

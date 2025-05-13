@@ -31,7 +31,81 @@ public class GameBoard {
     }
 
     /**
-     * Methode testet, ob das Spielfeld komplett gefüllt ist. Also ob das Spiel vorbei ist
+     * Methode prüft, ob die übergebene Form an der angegebenen Position eingefüt werden kann.
+     * @param _form Form die eingefügt werden soll
+     * @param _reihe Reihe in der die Form eingefügt werden soll
+     * @param _spalte Spalte in der die Form eingefügt werden soll
+     * @return Wahrheitswert -> passt die Form rein?
+     */
+    public boolean canPlace(Form _form, int _reihe, int _spalte)
+    {
+        // Zeilenmuster der Form holen
+        int[][] zellen = _form.getForm();
+
+        // über das Zeilenmuster laufen
+        for(int i = 0; i < _form.getHoehe(); i++)
+        {
+            for(int j = 0; j < _form.getBreite(); j++)
+            {
+                // wenn das Zeilenmuster belegt ist
+                if(zellen[i][j] == 1)
+                {
+                    // Zielreihe & -spalte
+                    int r = _reihe + i;
+                    int s = _spalte + j;
+
+                    // überprüfen, ob die Form im Spielfeld liegt
+                    if(r >= this.reihen || s >= this.spalten || r < 0 || s < 0)
+                    {
+                        // -> liegt außerhalb
+                        return false;
+                    }
+
+                    // Überprüfen, ob die Zellen im Spielfeld bereits belegt sind
+                    if(this.spielfeld[r][s] == 1)
+                    {
+                        // -> bereits belegt
+                        return false;
+                    }
+                }
+            }
+        }
+        // ansonsten -> kann eingefügt werden
+        return true;
+    }
+
+    /**
+     * Methode setzt die übergebene Form an die angegebene Position.
+     * @param _form Form die gesetzt werden soll
+     * @param _reihe Reihe in der die Form platziert werden soll
+     * @param _spalte Spalte in der die Form platziert werden soll
+     */
+    public void placeForm(Form _form, int _reihe, int _spalte)
+    {
+        // prüfen, ob die Form an der angegebenen Stelle überhaupt platziert werden kann
+        if(this.canPlace(_form, _reihe, _spalte))
+        {
+            // Zellenmuster der Form holen
+            int[][] zellen = _form.getForm();
+
+            // über Zellenmuster laufen
+            for(int i = 0; i < _form.getHoehe(); i++)
+            {
+                for(int j = 0; j < _form.getBreite(); j++)
+                {
+                    // an den Stellen wo 1 im Zellenmuster steht, wird die Form im Spielfeld gesetzt
+                    if(zellen[i][j] == 1)
+                    {
+                        // Form platzieren
+                        this.spielfeld[_reihe + i][_spalte + j] = 1;
+                    }
+                }
+            }
+        }
+    }
+
+
+     /** Methode testet, ob das Spielfeld komplett gefüllt ist. Also ob das Spiel vorbei ist
      * @return true or false, ist das Spielfeld voll?
      */
     public boolean isComplete()
