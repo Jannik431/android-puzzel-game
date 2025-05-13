@@ -15,7 +15,7 @@ public class GameBoard {
     /**
      * Gitter des Spielfelds
      */
-   private int[][] gitter;
+   private int[][] spielfeld;
 
     /**
      * Konstruktor der Klasse GameBoard, mit der ein Spielfeld erzeugt ewrden kann
@@ -27,7 +27,7 @@ public class GameBoard {
         // IV setzen
         this.reihen = _reihen;
         this.spalten = _spalten;
-        this.gitter = new int[this.reihen][this.spalten];
+        this.spielfeld = new int[this.reihen][this.spalten];
     }
 
     /**
@@ -42,7 +42,7 @@ public class GameBoard {
             for(int s = 0; s < spalten; s++)
             {
                 // wenn noch eine null vorhanden ist, gibt es ein leeres Feld
-                if(gitter[r][s] == 0)
+                if(spielfeld[r][s] == 0)
                 {
                     // Spielfeld ist nicht voll
                     return false;
