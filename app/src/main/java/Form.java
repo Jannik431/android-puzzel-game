@@ -15,7 +15,7 @@ public class Form {
     /**
      * Referenz auf die Form
      */
-    private int [][] form;
+    private int [][] form; // 1 = belegt, 0 = leer
 
     /**
      * Konstruktor der Klasse Form, der ein Form-Objekt erzeugt
@@ -26,5 +26,32 @@ public class Form {
         this.form = form;
         this.hoehe = form.length;
         this.breite = form[0].length;
+    }
+
+    /**
+     * Methode gibt die Form zurück
+     * @return Form
+     */
+    public int[][] getForm()
+    {
+        return this.form;
+    }
+
+    /**
+     * Methode gibt die Höhe der Form
+     * @return Höhe
+     */
+    public int getFormHoehe()
+    {
+        return this.hoehe;
+    }
+
+    /**
+     * Methode gibt die Breite der Form
+     * @return Breite
+     */
+    public int getBreite()
+    {
+        return this.breite;
     }
 }
