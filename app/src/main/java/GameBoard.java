@@ -101,6 +101,9 @@ public class GameBoard {
                     }
                 }
             }
+        }else
+        {
+            System.out.println("Form kann hier nicht platziert werden.");
         }
     }
 
