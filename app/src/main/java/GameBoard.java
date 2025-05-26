@@ -80,29 +80,23 @@ public class GameBoard {
      * @param _reihe Reihe in der die Form platziert werden soll
      * @param _spalte Spalte in der die Form platziert werden soll
      */
-    public void placeForm(Form _form, int _reihe, int _spalte)
-    {
+    public void placeForm(Form _form, int _reihe, int _spalte) {
         // prüfen, ob die Form an der angegebenen Stelle überhaupt platziert werden kann
-        if(this.canPlace(_form, _reihe, _spalte))
-        {
+        if (this.canPlace(_form, _reihe, _spalte)) {
             // Zellenmuster der Form holen
             int[][] zellen = _form.getForm();
 
             // über Zellenmuster laufen
-            for(int i = 0; i < _form.getHoehe(); i++)
-            {
-                for(int j = 0; j < _form.getBreite(); j++)
-                {
+            for (int i = 0; i < _form.getHoehe(); i++) {
+                for (int j = 0; j < _form.getBreite(); j++) {
                     // an den Stellen wo 1 im Zellenmuster steht, wird die Form im Spielfeld gesetzt
-                    if(zellen[i][j] == 1)
-                    {
+                    if (zellen[i][j] == 1) {
                         // Form platzieren
                         this.spielfeld[_reihe + i][_spalte + j] = 1;
                     }
                 }
             }
-        }else
-        {
+        } else {
             System.out.println("Form kann hier nicht platziert werden.");
         }
     }
