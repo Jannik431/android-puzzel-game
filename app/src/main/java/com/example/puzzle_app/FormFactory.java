@@ -46,4 +46,117 @@ public class FormFactory {
                         {1}
                 });
     }
+
+    /**
+     * Form für schweres Level
+     * 1x5
+     * @return Form
+     */
+    public static Form getILangForm()
+    {
+        return new Form(new int[][]
+                {
+                        {1},
+                        {1},
+                        {1},
+                        {1},
+                        {1}
+                });
+    }
+
+    /**
+     * Form für schweres Level.
+     * 5x4
+     * @return Form
+     */
+    public static Form getGrossesL()
+    {
+        return new Form(new int[][]
+                {
+                        {1,0,0,0},
+                        {1,0,0,0},
+                        {1,0,0,0},
+                        {1,0,0,0},
+                        {1,1,1,1}
+                });
+    }
+
+    /**
+     * Form für schweres Level.
+     * 3x6
+     * @return Form
+     */
+    public static Form getGrossesRechteck()
+    {
+        return new Form(new int[][]
+                {
+                        {1,1,1},
+                        {1,1,1},
+                        {1,1,1},
+                        {1,1,1},
+                        {1,1,1},
+                        {1,1,1}
+                });
+    }
+
+    /**
+     * Form für schweres Level.
+     * 3x3
+     * @return Form
+     */
+    public static Form getRechteck()
+    {
+        return new Form(new int[][]
+                {
+                        {1,1,1},
+                        {1,1,1},
+                        {1,1,1}
+                });
+    }
+
+    /**
+     * Form für schweres Level
+     * 2x2
+     * @return Form
+     */
+    public static Form getKleinesRechteck()
+    {
+        return new Form(new int[][]
+                {
+                        {1,1},
+                        {1,1}
+                });
+    }
+
+    /**
+     * Form für schweres Level.
+     * @return Form
+     */
+    public static Form getGrossesT()
+    {
+        return new Form(new int[][]
+                {
+                        {1,1,1,1,1,1},
+                        {0,0,0,1,0,0},
+                        {0,0,0,1,0,0}
+                });
+    }
+
+    /**
+     * Form für schweres Level
+     * @return Form
+     */
+    public static Form getFalschesL()
+    {
+        return new Form(new int[][]
+                {
+                        {0,0,0,1,1,1},
+                        {0,0,0,1,1,1},
+                        {0,0,0,1,1,1},
+                        {0,0,0,1,1,1},
+                        {1,1,1,1,1,1},
+                        {1,1,1,1,1,1},
+                        {1,1,1,1,1,1},
+                });
+    }
 }

@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Spielfeld und Beispiel-Form erzeugen
         this.spielfeld = new GameBoard(10,10);
-        this.form = FormFactory.getIForm();
+        this.form = FormFactory.getGrossesL();
 
         // GameView initialiseren
         this.gameView = new GameView(this, this.spielfeld, this.form);
