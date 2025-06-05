@@ -23,7 +23,7 @@ public class GameView extends View{
     /**
      * Konstante, die die Pixelgröße der Zellen festlegt
      */
-    private final int zellenGroesse = 80;
+    private final int zellenGroesse = 70;
 
     /**
      * Konstante, die den Abstand zwischen Zellen festlegt
@@ -48,7 +48,7 @@ public class GameView extends View{
     /**
      * Pixelgröße einer Zelle
      */
-    private int zellGroesse = 80;
+    private int zellGroesse = 70;
 
     /**
      * Konstruktor, der ein Spielfeld und eine com.example.puzzle_app.Form zuweist und die Darstellungen festlegt
