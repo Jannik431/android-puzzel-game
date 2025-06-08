@@ -17,6 +17,8 @@ public class MainActivity extends AppCompatActivity {
     private GameView gameView;
     private GameBoard spielfeld;
     private Form form;
+    private GameBoardPrinter gameBoardPrinter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,5 +48,26 @@ public class MainActivity extends AppCompatActivity {
 
         // Layout als Haupt-View der Activity setzen
         setContentView(layout);
+
+        gameBoardPrinter = new GameBoardPrinter();
+        GameBoard gameBoardPrinted = new GameBoard(10,10);
+        FormFactory formFactory = new FormFactory();
+        gameBoardPrinter.printGameBoard(gameBoardPrinted);
+        System.out.println("\n");
+        System.out.println("-- Platziere L an Koordinate 1,1 --");
+        gameBoardPrinter.placeForm(gameBoardPrinted,form,1,1);
+        System.out.println("\n");
+        System.out.println("-- Platziere L an Koordinate 1,1 (schon belegt) --");
+        gameBoardPrinter.placeForm(gameBoardPrinted,form,1,1);
+        System.out.println("\n");
+        System.out.println("-- Platziere L an Koordinate 0,3 (funktioniert) -- ");
+        gameBoardPrinter.placeForm(gameBoardPrinted,form,0,3);
+        System.out.println("\n");
+        System.out.println("-- Platziere L an Koordinate 8,8 (teilweise außerhalb des Spielfelds) -- ");
+        gameBoardPrinter.placeForm(gameBoardPrinted,form,8,8);
+        System.out.println("\n");
+        System.out.println("-- Platziere L an Koordinate 20,20 (komplett außerhalb des Spielfelds) -- ");
+        gameBoardPrinter.placeForm(gameBoardPrinted,form,20,20);
     }
+
 }

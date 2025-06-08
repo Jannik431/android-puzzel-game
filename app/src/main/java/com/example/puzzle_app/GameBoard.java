@@ -1,5 +1,7 @@
 package com.example.puzzle_app;
 
+import androidx.annotation.NonNull;
+
 /**
  * Diese Klasse verwaltet das Spielfeld
  */
@@ -90,7 +92,7 @@ public class GameBoard {
                     // an den Stellen wo 1 im Zellenmuster steht, wird die com.example.puzzle_app.Form im Spielfeld gesetzt
                     if (zellen[i][j] == 1) {
                         // com.example.puzzle_app.Form platzieren
-                        this.spielfeld[_reihe + i][_spalte + j] = 1;
+                        this.spielfeld[_reihe + i][_spalte + j] = 1; // Hier vielleicht stattdessen formId einfügen
                     }
                 }
             }
@@ -119,6 +121,7 @@ public class GameBoard {
         // ansonsten -> Spielfeld muss voll sein
         return true;
     }
+
 
     /**
      * Methode gibt das Raster des Spielfelds zurück
