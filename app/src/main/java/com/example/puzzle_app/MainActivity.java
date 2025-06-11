@@ -11,6 +11,8 @@ import androidx.core.view.WindowInsetsCompat;
 import android.view.Gravity;
 import android.widget.LinearLayout;
 
+import java.util.Scanner;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -68,6 +70,46 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("\n");
         System.out.println("-- Platziere L an Koordinate 20,20 (komplett außerhalb des Spielfelds) -- ");
         gameBoardPrinter.placeForm(gameBoardPrinted,form,20,20);
+        System.out.println("\n");
+        System.out.println("I einfügen");
+        this.form = FormFactory.getIForm();
+        gameBoardPrinter.placeForm(gameBoardPrinted,form,0,4);
+        System.out.println("\n");
+        System.out.println("-- Alle L entfernen");
+        gameBoardPrinter.removeForm(gameBoardPrinted,2);
+
+//        Scanner scan = new Scanner(System.in);
+//        String eingabe = "";
+//        int reihe;
+//        int spalte;
+//        int id;
+//        System.out.println("Willkommen zum Puzzle Spiel");
+//        System.out.println("Drücke e um das spiel zu verlassen");
+//
+//        while(!eingabe.equalsIgnoreCase("E")){
+//            System.out.println("E - Exit P - Place R - Remove");
+//            System.out.print("Mache eine Eingabe > ");
+//            eingabe = scan.next();
+//            if(eingabe.equalsIgnoreCase("E")){
+//                break;
+//            } else if (eingabe.equalsIgnoreCase("P")){
+//                System.out.println("Wähle die Koordinaten für deine Form (das wird natürlich später durch klicken ersetzt)");
+//                System.out.print("Zeile >");
+//                reihe = scan.nextInt();
+//                System.out.println("Spalte >");
+//                spalte = scan.nextInt();
+//                gameBoardPrinter.placeForm(gameBoardPrinted,form, reihe, spalte);
+//            } else if (eingabe.equalsIgnoreCase("R")) {
+//                System.out.println("Wähle die ID der Form, die du entfernen möchtest");
+//                System.out.print("ID >");
+//                id = scan.nextInt();
+//                gameBoardPrinter.removeForm(gameBoardPrinted, id);
+//            }
+//
+//        }
+//        new Thread(new ConsoleGameLoop(gameBoardPrinted, form, gameBoardPrinter).start();
+        new Thread(new ConsoleGameLoop(gameBoardPrinted, form, gameBoardPrinter)).start();
+
     }
 
 }

@@ -99,7 +99,8 @@ public class GameView extends View{
             for(int j = 0; j < raster[i].length; j++)
             {
                 // wenn Zelle belegt:
-                if(raster[i][j] == 1)
+//                if(raster[i][j] == 1)
+                if(raster[i][j] != 0)
                 {
                     canvas.drawRect(
                             j * this.zellGroesse,
@@ -135,7 +136,7 @@ public class GameView extends View{
                 for(int j = 0; j < muster[i].length; j++)
                 {
                     // wenn Zelle belegt
-                    if(muster[i][j] == 1)
+                    if(muster[i][j] != 0)
                     {
                         canvas.drawRect(
                                 j * zellGroesse,

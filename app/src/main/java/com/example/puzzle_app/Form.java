@@ -23,11 +23,21 @@ public class Form {
      * Konstruktor der Klasse com.example.puzzle_app.Form, der ein com.example.puzzle_app.Form-Objekt erzeugt
      * @param form com.example.puzzle_app.Form die erzeugt werden soll
      */
+
+    private int formId;
+
     public Form(int[][] form)
     {
         this.form = form;
         this.hoehe = form.length;
         this.breite = form[0].length;
+    }
+    public Form(int[][] form, int formId)
+    {
+        this.form = form;
+        this.hoehe = form.length;
+        this.breite = form[0].length;
+        this.formId = formId;
     }
 
     /**
@@ -55,5 +65,9 @@ public class Form {
     public int getBreite()
     {
         return this.breite;
+    }
+
+    public int getFormId(){
+        return formId;
     }
 }

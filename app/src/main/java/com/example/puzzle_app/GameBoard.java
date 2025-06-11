@@ -50,7 +50,8 @@ public class GameBoard {
         for (int i = 0; i < _form.getHoehe(); i++) {
             for (int j = 0; j < _form.getBreite(); j++) {
                 // wenn das Zeilenmuster belegt ist
-                if (zellen[i][j] == 1) {
+//                if (zellen[i][j] == 1) {
+                  if (zellen[i][j] != 0) {
                     // Zielreihe & -spalte
                     int r = _reihe + i;
                     int s = _spalte + j;
@@ -62,7 +63,8 @@ public class GameBoard {
                     }
 
                     // Überprüfen, ob die Zellen im Spielfeld bereits belegt sind
-                    if (this.spielfeld[r][s] == 1) {
+//                    if (this.spielfeld[r][s] == 1) {
+                      if (this.spielfeld[r][s] != 0) {
                         // -> bereits belegt
                         return false;
                     }
@@ -90,9 +92,9 @@ public class GameBoard {
             for (int i = 0; i < _form.getHoehe(); i++) {
                 for (int j = 0; j < _form.getBreite(); j++) {
                     // an den Stellen wo 1 im Zellenmuster steht, wird die com.example.puzzle_app.Form im Spielfeld gesetzt
-                    if (zellen[i][j] == 1) {
+                    if (zellen[i][j] != 0) {
                         // com.example.puzzle_app.Form platzieren
-                        this.spielfeld[_reihe + i][_spalte + j] = 1; // Hier vielleicht stattdessen formId einfügen
+                         this.spielfeld[_reihe + i][_spalte + j] = _form.getFormId();
                     }
                 }
             }
@@ -121,6 +123,9 @@ public class GameBoard {
         // ansonsten -> Spielfeld muss voll sein
         return true;
     }
+
+
+
 
 
     /**
