@@ -12,6 +12,9 @@ import android.view.Gravity;
 import android.widget.LinearLayout;
 
 import java.util.Scanner;
+import java.util.List;
+import java.util.ArrayList;
+
 
 
 public class MainActivity extends AppCompatActivity {
@@ -20,63 +23,106 @@ public class MainActivity extends AppCompatActivity {
     private GameBoard spielfeld;
     private Form form;
     private GameBoardPrinter gameBoardPrinter;
+    private FormPaletteView paletteView;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Spielfeld und Beispiel-Form erzeugen
+        // Spielfeld vorbereiten
         this.spielfeld = new GameBoard(10,10);
-        this.form = FormFactory.getGrossesL();
 
-        // GameView initialiseren
-        this.gameView = new GameView(this, this.spielfeld, this.form);
+        // GameView zeigt nur das Spielfeld (aktuelle Form = null)
+        this.gameView = new GameView(this, this.spielfeld, null);
 
-        // LinearLayout als Container für die GameView
-        LinearLayout layout = new LinearLayout(this);
-        layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setGravity(Gravity.CENTER);
-        layout.setPadding(20,20,20,20);
+        // Liste von Formen für die Miniaturanzeige
+        List<Form> formenListe = new ArrayList<>();
+        formenListe.add(FormFactory.getGrossesL());
+        formenListe.add(FormFactory.getGrossesRechteck());
+        formenListe.add(FormFactory.getTForm());
 
-        // Layout-Parameter für GameView
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT, // Breite nach Inhalt
-                LinearLayout.LayoutParams.WRAP_CONTENT); // Höhe nach Inhalt
-        params.gravity = Gravity.CENTER; // GameView mittig im Layout positionieren
+        // FormPalette zeigt diesen Formen
+        this.paletteView = new FormPaletteView (this, formenListe);
 
-        // GameView dem Layout hinzufügen mit den Parametern
-        layout.addView(gameView, params);
+        // Hauptlayout vertikal ausrichten
+        LinearLayout hauptLayout = new LinearLayout(this);
+        hauptLayout.setOrientation(LinearLayout.VERTICAL);
+        hauptLayout.setGravity(Gravity.CENTER);
+        hauptLayout.setPadding(20,20,20,20);
 
-        // Layout als Haupt-View der Activity setzen
-        setContentView(layout);
+        // GameView zum Layout hinzufügen
+        LinearLayout.LayoutParams gameParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        hauptLayout.addView(gameView, gameParams);
 
-        gameBoardPrinter = new GameBoardPrinter();
-        GameBoard gameBoardPrinted = new GameBoard(10,10);
-        FormFactory formFactory = new FormFactory();
-        gameBoardPrinter.printGameBoard(gameBoardPrinted);
-        System.out.println("\n");
-        System.out.println("-- Platziere L an Koordinate 1,1 --");
-        gameBoardPrinter.placeForm(gameBoardPrinted,form,1,1);
-        System.out.println("\n");
-        System.out.println("-- Platziere L an Koordinate 1,1 (schon belegt) --");
-        gameBoardPrinter.placeForm(gameBoardPrinted,form,1,1);
-        System.out.println("\n");
-        System.out.println("-- Platziere L an Koordinate 0,3 (funktioniert) -- ");
-        gameBoardPrinter.placeForm(gameBoardPrinted,form,0,3);
-        System.out.println("\n");
-        System.out.println("-- Platziere L an Koordinate 8,8 (teilweise außerhalb des Spielfelds) -- ");
-        gameBoardPrinter.placeForm(gameBoardPrinted,form,8,8);
-        System.out.println("\n");
-        System.out.println("-- Platziere L an Koordinate 20,20 (komplett außerhalb des Spielfelds) -- ");
-        gameBoardPrinter.placeForm(gameBoardPrinted,form,20,20);
-        System.out.println("\n");
-        System.out.println("I einfügen");
-        this.form = FormFactory.getIForm();
-        gameBoardPrinter.placeForm(gameBoardPrinted,form,0,4);
-        System.out.println("\n");
-        System.out.println("-- Alle L entfernen");
-        gameBoardPrinter.removeForm(gameBoardPrinted,2);
+        // PaletteView darunter einfügen
+        LinearLayout.LayoutParams paletteParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        paletteParams.topMargin = 50;
+        hauptLayout.addView(paletteView, paletteParams);
+
+        // Layout setzen
+        setContentView(hauptLayout);
+
+        // Beispielhafte Anfangsform
+//        super.onCreate(savedInstanceState);
+//
+//        // Spielfeld und Beispiel-Form erzeugen
+//        this.spielfeld = new GameBoard(10,10);
+//        this.form = FormFactory.getGrossesL();
+//
+//        // GameView initialiseren
+//        this.gameView = new GameView(this, this.spielfeld, this.form);
+//
+//        // LinearLayout als Container für die GameView
+//        LinearLayout layout = new LinearLayout(this);
+//        layout.setOrientation(LinearLayout.VERTICAL);
+//        layout.setGravity(Gravity.CENTER);
+//        layout.setPadding(20,20,20,20);
+//
+//        // Layout-Parameter für GameView
+//        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+//                LinearLayout.LayoutParams.WRAP_CONTENT, // Breite nach Inhalt
+//                LinearLayout.LayoutParams.WRAP_CONTENT); // Höhe nach Inhalt
+//        params.gravity = Gravity.CENTER; // GameView mittig im Layout positionieren
+//
+//        // GameView dem Layout hinzufügen mit den Parametern
+//        layout.addView(gameView, params);
+//
+//        // Layout als Haupt-View der Activity setzen
+//        setContentView(layout);
+//
+//        gameBoardPrinter = new GameBoardPrinter();
+//        GameBoard gameBoardPrinted = new GameBoard(10,10);
+//        FormFactory formFactory = new FormFactory();
+//        gameBoardPrinter.printGameBoard(gameBoardPrinted);
+//        System.out.println("\n");
+//        System.out.println("-- Platziere L an Koordinate 1,1 --");
+//        gameBoardPrinter.placeForm(gameBoardPrinted,form,1,1);
+//        System.out.println("\n");
+//        System.out.println("-- Platziere L an Koordinate 1,1 (schon belegt) --");
+//        gameBoardPrinter.placeForm(gameBoardPrinted,form,1,1);
+//        System.out.println("\n");
+//        System.out.println("-- Platziere L an Koordinate 0,3 (funktioniert) -- ");
+//        gameBoardPrinter.placeForm(gameBoardPrinted,form,0,3);
+//        System.out.println("\n");
+//        System.out.println("-- Platziere L an Koordinate 8,8 (teilweise außerhalb des Spielfelds) -- ");
+//        gameBoardPrinter.placeForm(gameBoardPrinted,form,8,8);
+//        System.out.println("\n");
+//        System.out.println("-- Platziere L an Koordinate 20,20 (komplett außerhalb des Spielfelds) -- ");
+//        gameBoardPrinter.placeForm(gameBoardPrinted,form,20,20);
+//        System.out.println("\n");
+//        System.out.println("I einfügen");
+//        this.form = FormFactory.getIForm();
+//        gameBoardPrinter.placeForm(gameBoardPrinted,form,0,4);
+//        System.out.println("\n");
+//        System.out.println("-- Alle L entfernen");
+//        gameBoardPrinter.removeForm(gameBoardPrinted,2);
 
 //        Scanner scan = new Scanner(System.in);
 //        String eingabe = "";
@@ -108,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
 //
 //        }
 //        new Thread(new ConsoleGameLoop(gameBoardPrinted, form, gameBoardPrinter).start();
-        new Thread(new ConsoleGameLoop(gameBoardPrinted, form, gameBoardPrinter)).start();
+//        new Thread(new ConsoleGameLoop(gameBoardPrinted, form, gameBoardPrinter)).start();
 
     }
 

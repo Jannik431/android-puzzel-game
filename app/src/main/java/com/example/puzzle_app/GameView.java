@@ -163,4 +163,21 @@ public class GameView extends View{
         // Ansicht aktualisieren
         invalidate();
     }
+
+    /**
+     * Maße für die GameView festlegen, damit sie richtig dargestellt werden kann.
+     * @param widthMeasureSpec horizontal space requirements as imposed by the parent.
+     *                         The requirements are encoded with
+     *                         {@link android.view.View.MeasureSpec}.
+     * @param heightMeasureSpec vertical space requirements as imposed by the parent.
+     *                         The requirements are encoded with
+     *                         {@link android.view.View.MeasureSpec}.
+     *
+     */
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
+    {
+        int breite = spielfeld.getSpielfeld()[0].length * zellenGroesse;
+        int hoehe = spielfeld.getSpielfeld().length * zellenGroesse;
+        setMeasuredDimension(breite, hoehe);
+    }
 }
