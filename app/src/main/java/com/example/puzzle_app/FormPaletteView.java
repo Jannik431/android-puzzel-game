@@ -142,31 +142,28 @@ public class FormPaletteView extends View{
      */
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
     {
-        // Maximale Breite aller Formen bestimmen
-        int y = 0;
-        int x = 0;
-        int maxBreite = MeasureSpec.getSize(widthMeasureSpec);
-        int maxZeilenHoehe = 0;
+        int maxWidth = MeasureSpec.getSize(widthMeasureSpec);
 
-        for(Form form: formen)
-        {
-            int formBreite = form.getBreite() * zellenGroesse;
-            int formHoehe = form.getHoehe() * zellenGroesse;
-            if(x + formBreite > maxBreite)
-            {
-                x = 0;
-                y += maxZeilenHoehe + padding;
-                maxZeilenHoehe = 0;
-            }
+        int maxFormBreite = 5; // Zellen
+        int maxFormHoehe = 5;  // Zellen
+        int formBlockBreite = maxFormBreite * zellenGroesse;
+        int formBlockHoehe = maxFormHoehe * zellenGroesse;
 
-            x += formBreite + padding;
-            if(formHoehe > maxZeilenHoehe)
-            {
-                maxZeilenHoehe = formHoehe;
+        int aktuelleBreite = 0;
+        int gesamtHoehe = formBlockHoehe; // mindestens eine Zeile
+        int zeilen = 1;
+
+        for (int i = 0; i < formen.size(); i++) {
+            if (aktuelleBreite + formBlockBreite > maxWidth) {
+                zeilen++;
+                aktuelleBreite = 0;
             }
+            aktuelleBreite += formBlockBreite + padding;
         }
-        y += maxZeilenHoehe;
 
-        setMeasuredDimension(maxBreite, y);
+        gesamtHoehe = zeilen * (formBlockHoehe + padding);
+
+        // Höhe explizit setzen
+        setMeasuredDimension(maxWidth, gesamtHoehe);
     }
 }

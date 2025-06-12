@@ -41,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
         formenListe.add(FormFactory.getGrossesL());
         formenListe.add(FormFactory.getGrossesRechteck());
         formenListe.add(FormFactory.getTForm());
+        formenListe.add(FormFactory.getFalschesL());
+        formenListe.add(FormFactory.getGrossesT());
+        formenListe.add(FormFactory.getIForm());
 
         // FormPalette zeigt diesen Formen
         this.paletteView = new FormPaletteView (this, formenListe);
