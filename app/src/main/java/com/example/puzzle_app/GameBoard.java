@@ -124,6 +124,37 @@ public class GameBoard {
         return true;
     }
 
+    /**
+     * Diese Methode wird erstmal nicht genutzt weil das individuelle entfernen buggy ist
+     * @param x x Koordinate des abgefragten gridPointValue
+     * @param y y Koordinate des abgefragten gridPointValue
+     * @return Gibt indirekt die formId der angeklickten Form zurück
+     *          Gibt 0 zurück wenn angeklickte Koordiante keine Form
+     */
+    public int getGridPointValue(int x, int y){
+        if( x < spielfeld.length && y <spielfeld.length){
+            return spielfeld[x][y];
+        }
+        else {
+            System.out.println("Ungültige Anfrage. Parameter sind outofbounds des Spielfeld");
+            System.out.println("0 wird stattdessen ausgegeben");
+            return 0;
+        }
+    }
+
+    /**
+     * Diese Methode wird erstmal nicht genutzt weil das individuelle entfernen buggy ist
+     * @param _form_id Die id der zu entfernenden Form
+     */
+    public void removeForm(int _form_id) {
+        for (int r = 0; r < this.getSpielfeld().length; r++) {
+            for (int s = 0; s < this.getSpielfeld()[r].length; s++) {
+                if (this.getSpielfeld()[r][s] == _form_id)
+                    this.getSpielfeld()[r][s] = 0;
+            }
+        }
+    }
+
 
 
 

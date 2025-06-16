@@ -209,17 +209,27 @@ public class GameView extends View{
             // Ausgabe der rohen X/Y-Koordinaten
             System.out.println("GameView " + "Touch bei Pixel-Koordinaten: X=" + x + ", Y=" + y);
 
-            // Optional: Umrechnung in Zell-Koordinaten
+            // Umrechnung in Zell-Koordinaten
             int spalte = (int) (x / zellenGroesse);
             int reihe = (int) (y / zellenGroesse);
             System.out.println("GameView " + "Touch in Spielfeld-Zelle: [" + reihe + ", " + spalte + "]");
 
             invalidate(); // View neu zeichnen
 
-            if (formPaletteView != null && formPaletteView.getAngeklickteForm() != null) { // NullPointer check
-                spielfeld.placeForm(formPaletteView.getAngeklickteForm(), reihe, spalte);
-            }else{
-                System.out.println("Es wurde keine Form angeklickt!");
+            // Form von GameView entfernen, wenn die geklickte Koordinate =! 0 ist (belegt)
+            // Diesen Code Abschnitt habe ich vorrübergehen deaktiviert weil das entfernen einzelnzer Formen buggy ist
+              boolean codeAbschnittIstAktiv = false;
+              if(codeAbschnittIstAktiv){
+//            if(spielfeld.getGridPointValue(reihe, spalte) != 0){
+                spielfeld.removeForm(spielfeld.getGridPointValue(spalte, reihe));
+            }
+            // Form zur GameView hinzufügen, wenn angeklickte Koordinate == 0 ist (noch frei)
+            else {
+                if (formPaletteView != null && formPaletteView.getAngeklickteForm() != null) { // NullPointer check
+                    spielfeld.placeForm(formPaletteView.getAngeklickteForm(), reihe, spalte);
+                } else {
+                    System.out.println("Es wurde keine Form angeklickt!");
+                }
             }
             return true;
         }
