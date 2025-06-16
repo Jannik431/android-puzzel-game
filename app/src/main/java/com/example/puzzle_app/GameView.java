@@ -51,6 +51,10 @@ public class GameView extends View{
      */
     private int zellGroesse = 70;
 
+    private FormPaletteView formPaletteView;
+
+
+
     /**
      * Konstruktor, der ein Spielfeld und eine com.example.puzzle_app.Form zuweist und die Darstellungen festlegt
      * @param context Android-Kontext der Activity, in der die View verwendet wird. Wird benötigt,
@@ -81,6 +85,10 @@ public class GameView extends View{
         this.paintForm = new Paint();
         this.paintForm.setColor(Color.BLUE);
         this.paintForm.setStyle(Paint.Style.FILL);
+    }
+
+    public void setFormPaletteView(FormPaletteView paletteView) {
+        this.formPaletteView = paletteView;
     }
 
     /**
@@ -186,11 +194,8 @@ public class GameView extends View{
     /**
      * onTouchEvent wird aufgerufen wenn der User auf das Spielfeld klickt.
      * Sie registriert dann die Koordinaten dieses klicks und legt eine Form an dieser Stelle ab.
-     * Momentan zum testen immer grossesL (siehe ToDo)
-     * ToDo -> Momentan wird beim klick immer grossesL gelegt. Es muss noch eine onTouchEvent
-     *         Methode in FormPalleteView sowie eine zugehörige getter Methode erstellt werden damit
-     *         der User eine Form auswählen kann und diese dann entsprechend in dieser Methode
-     *         zum legen einer Form genutzt werden kann.
+     * Es wird immer die Form gelegt, die zuvor in der formPaletteView angekiclt wurde.
+     * Wurde keine Form angeklickt, so pasiert nichts
      * @param event Ein Objekt der Klasse Motion Event welches über die nötigen Methoden
      *              verfügt um ein click und dessen Koordinaten zu registrieren
      */
@@ -209,14 +214,13 @@ public class GameView extends View{
             int reihe = (int) (y / zellenGroesse);
             System.out.println("GameView " + "Touch in Spielfeld-Zelle: [" + reihe + ", " + spalte + "]");
 
-            // --- BEGIN MARKIERUNG ---
-//            markierteZellen.add(new Point(spalte, reihe));
-            this.aktuelleForm = FormFactory.getGrossesL();
-            spielfeld.placeForm(aktuelleForm,reihe,spalte);
-//            spielfeld.placeForm(formPaletteView.getangeklickteForm(),reihe,spalte);
             invalidate(); // View neu zeichnen
-            // --- END MARKIERUNG ---
 
+            if (formPaletteView != null && formPaletteView.getAngeklickteForm() != null) { // NullPointer check
+                spielfeld.placeForm(formPaletteView.getAngeklickteForm(), reihe, spalte);
+            }else{
+                System.out.println("Es wurde keine Form angeklickt!");
+            }
             return true;
         }
         return false;

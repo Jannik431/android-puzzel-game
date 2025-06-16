@@ -16,7 +16,7 @@ public class FormFactory {
                         {1,0},
                         {1,0},
                         {1,1}
-                 });
+                 },1);
     }
 
     /**
@@ -30,7 +30,7 @@ public class FormFactory {
                         {1,1,1},
                         {0,1,0},
                         {0,1,0}
-                }, 3);
+                }, 2);
     }
 
     /**
@@ -44,7 +44,7 @@ public class FormFactory {
                         {1},
                         {1},
                         {1}
-                }, 1);
+                }, 3);
     }
 
     /**
@@ -61,7 +61,7 @@ public class FormFactory {
                         {1},
                         {1},
                         {1}
-                });
+                },4);
     }
 
     /**
@@ -78,7 +78,7 @@ public class FormFactory {
                         {2, 0, 0, 0},
                         {2, 0, 0, 0},
                         {2, 2, 2, 2}
-                }, 2 );
+                }, 5);
     }
 
     /**
@@ -96,7 +96,7 @@ public class FormFactory {
                         {1,1,1},
                         {1,1,1},
                         {1,1,1}
-                });
+                },6);
     }
 
     /**
@@ -111,7 +111,7 @@ public class FormFactory {
                         {1,1,1},
                         {1,1,1},
                         {1,1,1}
-                });
+                },7);
     }
 
     /**
@@ -125,7 +125,7 @@ public class FormFactory {
                 {
                         {1,1},
                         {1,1}
-                });
+                },8);
     }
 
     /**
@@ -139,7 +139,7 @@ public class FormFactory {
                         {1,1,1,1,1,1},
                         {0,0,0,1,0,0},
                         {0,0,0,1,0,0}
-                });
+                },9);
     }
 
     /**
@@ -157,6 +157,39 @@ public class FormFactory {
                         {1,1,1,1,1,1},
                         {1,1,1,1,1,1},
                         {1,1,1,1,1,1},
-                });
+                },10);
+    }
+
+    /**
+     * Gibt basierend auf der formId eine neue Form zurück.
+     * @param formId Die ID der gewünschten Form
+     * @return Neue Instanz der Form oder null, falls unbekannt
+     */
+    public static Form getFormById(int formId)
+    {
+        switch (formId) {
+            case 1:
+                return getLForm();
+            case 2:
+                return getTForm();
+            case 3:
+                return getIForm();
+            case 4:
+                return getILangForm();
+            case 5:
+                return getGrossesL();
+            case 6:
+                return getGrossesRechteck();
+            case 7:
+                return getRechteck();
+            case 8:
+                return getKleinesRechteck();
+            case 9:
+                return getGrossesT();
+            case 10:
+                return getFalschesL();
+            default:
+                return null;
+        }
     }
 }

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
+import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -31,6 +33,15 @@ public class FormPaletteView extends View{
      * Abstand zwischen Formen
      */
     private int padding = 20;
+    /**
+     * Hier werden die klickbereiche als Rectangle gespeichert. onTouchEvent braucht diese List
+     * um den user click mit den Positionen der Formen abzugleichen.
+     */
+    private List<Rect> klickbereiche = new ArrayList<>();
+    /**
+     * Speichert die aktuell angeklickte Form. Dies ist auch nötig für die onTouchEvent Methode
+     */
+    private Form angeklickteForm = null;
 
     /**
      * View erstellen
@@ -49,11 +60,14 @@ public class FormPaletteView extends View{
     }
 
     /**
-     * Methode zeichnet die Miniaturansicht der Formen
+     * Methode zeichnet die Miniaturansicht der Formen und speichert die entsprechenden klickbereiche.
+     * Diese klickbereiche sind notwendig für die onTouchEvent Methode
      * @param canvas the canvas on which the background will be drawn
      */
     protected void onDraw(Canvas canvas)
     {
+
+        klickbereiche.clear(); // Klickbereiche zurückgesetzt, damit onTouchEvent() nicht mit alten Werten arbeitet
         super.onDraw(canvas);
 
         int maxBreite = getWidth();
@@ -91,6 +105,12 @@ public class FormPaletteView extends View{
             x = startX;
 
             for (Form form : zeile) {
+
+                // Klickbereich für diese Form speichern (onTouchEvent braucht Information)
+                // (!!) Eventuell problematisch (!!) Allocations sollten eigentlich nicht in draw() Methoden stattfinden. Aber ist denke ich erstmal in Ordnung.
+                Rect klickbereich = new Rect(x, y, x + formBlockBreite, y + formBlockHoehe);
+                klickbereiche.add(klickbereich);
+
                 int formW = form.getBreite();
                 int formH = form.getHoehe();
                 int[][] zellen = form.getForm();
@@ -165,5 +185,51 @@ public class FormPaletteView extends View{
 
         // Höhe explizit setzen
         setMeasuredDimension(maxWidth, gesamtHoehe);
+    }
+
+    /**
+     * Registriert Klick Koordinaten innerhalb der FormPaletteView.
+     * Wird eine Form angeklickt, so wird sie in angeklickteForm gespeichert.
+     * Mit dem Getter getAngeklickteForm kann sich diese Form später geholt werden
+     *
+     * @param event The motion event object
+     */
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        // Prüft ob das registrierte Event ein user click ist (ACTION_DOWN)
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            // Speichert die Koordinaten des Klicks
+            float x = event.getX();
+            float y = event.getY();
+
+            // -- Nur für die Konsole zum Debuggen --
+            System.out.println("FormPaletteView " + "Touch bei Pixel-Koordinaten: X=" + x + ", Y=" + y);
+
+            // Umrechnung in Zell-Koordinaten
+            int spalte = (int) (x / zellenGroesse);
+            int reihe = (int) (y / zellenGroesse);
+            System.out.println("FormPaletteView " + "Touch in Spielfeld-Zelle: [" + reihe + ", " + spalte + "]");
+            // -- Nur für die Konsole zum Debuggen --
+
+            for (int i = 0; i < klickbereiche.size(); i++) {
+                Rect r = klickbereiche.get(i);
+                if (r.contains((int)x, (int)y)) {
+                    angeklickteForm = FormFactory.getFormById(formen.get(i).getFormId());
+                    invalidate();
+                    break;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * GameView nutzt diesen getter um die aktuell angeklickte Form auf dem Spielfeld zu platzieren
+     * @return Gibt die zuletzt angeklickte Form zurück. Kann auch null zurückgeben!
+     */
+    public Form getAngeklickteForm() {
+            return angeklickteForm;
+
     }
 }
