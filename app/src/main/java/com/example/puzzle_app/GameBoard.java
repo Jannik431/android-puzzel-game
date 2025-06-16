@@ -167,4 +167,18 @@ public class GameBoard {
     public int[][] getSpielfeld() {
         return this.spielfeld;
     }
+
+    /**
+     * Methode löscht alle Formen aus dem Spielfeld
+     */
+    public void removeAll()
+    {
+        for(int r = 0; r < this.getSpielfeld().length; r++)
+        {
+            for(int s = 0; s < this.getSpielfeld()[r].length; s++)
+            {
+                this.getSpielfeld()[r][s] = 0;
+            }
+        }
+    }
 }
