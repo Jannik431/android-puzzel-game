@@ -1,7 +1,9 @@
 package com.example.puzzle_app;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.Gravity;
@@ -10,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,7 +77,9 @@ public class Level1Activity extends AppCompatActivity {
         // Timer-Anzeige
         this.timerText = new TextView(this);
         timerText.setText("60s");
-        timerText.setTextSize(18);
+        timerText.setTextSize(24);
+        timerText.setTypeface(Typeface.MONOSPACE);
+        timerText.setTextColor(Color.parseColor("#FF5722"));
         timerText.setPadding(50,0,0,0);
 
         // removeall() - Button

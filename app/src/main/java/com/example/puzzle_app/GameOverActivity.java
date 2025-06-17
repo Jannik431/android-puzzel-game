@@ -1,6 +1,8 @@
 package com.example.puzzle_app;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.widget.Button;
@@ -19,6 +21,8 @@ public class GameOverActivity extends AppCompatActivity {
         TextView text = new TextView(this);
         text.setText("Game Over!");
         text.setTextSize(32);
+        text.setTypeface(Typeface.MONOSPACE);
+        text.setTextColor(Color.parseColor("#FF5722"));
         text.setGravity(Gravity.CENTER);
 
         // Button zurück
