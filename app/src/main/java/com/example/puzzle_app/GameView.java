@@ -111,6 +111,20 @@ public class GameView extends View{
 //                if(raster[i][j] == 1)
                 if(raster[i][j] != 0)
                 {
+                    // Farbe je nach FormID setzen
+                    switch(raster[i][j])
+                    {
+                        case 1:  paintZelle.setColor(Color.parseColor("#D7C4A3"));break;
+                        case 2: paintZelle.setColor(Color.parseColor("#C45A4A"));break;
+                        case 3: paintZelle.setColor(Color.parseColor("#5B3A29"));break;
+                        case 4: paintZelle.setColor(Color.parseColor("#8B6D5C"));break;
+                        case 5: paintZelle.setColor( Color.parseColor("#7F4A3C"));break;
+                        case 6: paintZelle.setColor( Color.parseColor("#B36B43"));break;
+                        case 7: paintZelle.setColor( Color.parseColor("#D9C4A5"));break;
+                        case 8: paintZelle.setColor( Color.parseColor("#6E4B2A"));break;
+                        case 9: paintZelle.setColor( Color.parseColor("#A0522D"));break;
+                        case 10: paintZelle.setColor( Color.parseColor("#E3C699"));break;
+                    }
                     canvas.drawRect(
                             j * this.zellGroesse,
                             i * this.zellGroesse,

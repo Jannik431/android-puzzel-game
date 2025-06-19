@@ -33,34 +33,44 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         // Einfaches vertikales Layout
         LinearLayout layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setGravity(Gravity.CENTER);
         layout.setPadding(50,50,50,50);
+        layout.setBackgroundResource(R.drawable.wood_background);
+
 
         // Button für unterschiedliche Level erstellen
         // Lambda-Funktion: kompakt Klick-Listener schreiben
         Button level1 = new Button(this);
-        level1.setText("Level1");
+        level1.setText("Level 1");
         level1.setOnClickListener(v -> {
             Intent intent = new Intent(this,Level1Activity.class);
             startActivity(intent);
         });
+        level1.setTextSize(18);
+        level1.setPadding(30,20,30,20);
+
 
         Button level2 = new Button(this);
-        level2.setText("Level2");
+        level2.setText("Level 2");
         level2.setOnClickListener(v -> {
             Intent intent = new Intent(this,Level2Activity.class);
             startActivity(intent);
         });
+        level2.setTextSize(18);
+        level2.setPadding(30,20,30,20);
 
         Button level3 = new Button(this);
-        level3.setText("Level3");
+        level3.setText("Level 3");
         level3.setOnClickListener(v -> {
             Intent intent = new Intent(this,Level3Activity.class);
             startActivity(intent);
         });
+        level3.setTextSize(18);
+        level3.setPadding(30,20,30,20);
 
         layout.addView(level1);
         layout.addView(level2);

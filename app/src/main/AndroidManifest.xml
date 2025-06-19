@@ -25,6 +25,7 @@
         <activity android:name=".Level2Activity"></activity>
         <activity android:name=".Level3Activity"></activity>
         <activity android:name=".GameOverActivity"></activity>
+        <activity android:name=".PauseActivity"></activity>
     </application>
 
 </manifest>

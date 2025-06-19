@@ -35,6 +35,20 @@ public class GameBoard {
     }
 
     /**
+     * Weiterer Konstrukor, zur Übertragung des Spielfelds von der LevelActivity zum PauseScreen
+     * @param raster Spielfeld-Raster
+     */
+    public GameBoard(int[][] raster) {
+        this.reihen = raster.length;
+        this.spalten = raster[0].length;
+        this.spielfeld = new int[reihen][spalten];
+
+        for (int i = 0; i < reihen; i++) {
+            System.arraycopy(raster[i], 0, this.spielfeld[i], 0, spalten);
+        }
+    }
+
+    /**
      * Methode prüft, ob die übergebene com.example.puzzle_app.Form an der angegebenen Position eingefüt werden kann.
      *
      * @param _form   com.example.puzzle_app.Form die eingefügt werden soll

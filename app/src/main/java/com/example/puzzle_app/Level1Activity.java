@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -26,13 +28,15 @@ public class Level1Activity extends AppCompatActivity {
 
     private boolean isRunning = false;
 
-    private long remainingTime = 10000;
+    private long remainingTime = 20000;
 
     private Button startStopButton;
 
     private CountDownTimer countDownTimer;
 
     private TextView timerText;
+
+    private ActivityResultLauncher<Intent> pauseActivityLauncher;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +66,8 @@ public class Level1Activity extends AppCompatActivity {
         hauptLayout.setOrientation(LinearLayout.VERTICAL);
         hauptLayout.setGravity(Gravity.CENTER);
         hauptLayout.setPadding(20,20,20,20);
+        hauptLayout.setBackgroundResource(R.drawable.wood_background);
+
 
         // Obere Button-Zeile (Start/Stopp + Timer)
         LinearLayout topBar = new LinearLayout(this);
@@ -72,7 +78,11 @@ public class Level1Activity extends AppCompatActivity {
         // Start/Stopp-Button
         this.startStopButton = new Button(this);
         startStopButton.setText("▶");
-        startStopButton.setOnClickListener(v -> timerUmschalten());
+        startStopButton.setOnClickListener(v -> {
+            timerUmschalten();
+            Intent intent = new Intent(this, PauseActivity.class);
+            pauseActivityLauncher.launch(intent);
+        });
 
         // Timer-Anzeige
         this.timerText = new TextView(this);
@@ -82,20 +92,10 @@ public class Level1Activity extends AppCompatActivity {
         timerText.setTextColor(Color.parseColor("#FF5722"));
         timerText.setPadding(50,0,0,0);
 
-        // removeall() - Button
-        Button removeAllButton = new Button(this);
-        removeAllButton.setText("⟳");
-        removeAllButton.setTextSize(24);
-        removeAllButton.setTypeface(null, Typeface.BOLD); // weil zeichen sonst zu dünn
-        removeAllButton.setOnClickListener(v -> {
-            this.spielfeld.removeAll();
-            this.gameView.invalidate(); // Spielfeld neu zeichnen
-        });
-
         // Buttons zu TopBar hinzufügen
         topBar.addView(startStopButton);
         topBar.addView(timerText);
-        topBar.addView(removeAllButton);
+//        topBar.addView(removeAllButton);
 
         // GameView zum Layout hinzufügen
         LinearLayout.LayoutParams gameParams = new LinearLayout.LayoutParams(
@@ -114,6 +114,29 @@ public class Level1Activity extends AppCompatActivity {
         hauptLayout.addView(topBar);
         hauptLayout.addView(gameView, gameParams);
         hauptLayout.addView(paletteView, paletteParams);
+
+        pauseActivityLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                        Intent data = result.getData();
+                        boolean removeAll = data.getBooleanExtra("removeAll", false);
+                        if (removeAll) {
+                            spielfeld.removeAll();
+                            gameView.invalidate();
+                        }
+                        boolean goHome = data.getBooleanExtra("goHome", false);
+                        if (goHome) {
+                            finish();
+                            return;
+                        }
+                    }
+                    // Nach Pause: Falls timer nicht läuft, neu starten
+                    if(!this.isRunning)
+                    {
+                        this.startTimer();
+                    }
+                });
 
         // Layout setzen
         setContentView(hauptLayout);
@@ -192,6 +215,5 @@ public class Level1Activity extends AppCompatActivity {
             this.countDownTimer.cancel();
         }
     }
-
 
 }
