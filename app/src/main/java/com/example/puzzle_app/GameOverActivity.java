@@ -37,6 +37,7 @@ public class GameOverActivity extends AppCompatActivity {
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setGravity(Gravity.CENTER);
         layout.setPadding(20,20,20,20);
+        layout.setBackgroundResource(R.drawable.wood_background);
 
         layout.addView(text);
         layout.addView(zurueck);
