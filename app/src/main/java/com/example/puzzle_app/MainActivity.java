@@ -13,6 +13,7 @@ import androidx.core.view.WindowInsetsCompat;
 import android.view.Gravity;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.Scanner;
 import java.util.List;
@@ -41,6 +42,15 @@ public class MainActivity extends AppCompatActivity {
         layout.setPadding(50,50,50,50);
         layout.setBackgroundResource(R.drawable.wood_background);
 
+
+        // Highscore TextView ganz oben einfügen
+        TextView highscoreText = new TextView(this);
+        highscoreText.setText("Highscore: 120"); // Beispielwert
+        highscoreText.setTextSize(22);
+        highscoreText.setTextColor(Color.WHITE);
+        highscoreText.setPadding(0, 0, 0, 50);
+        highscoreText.setGravity(Gravity.CENTER);
+        layout.addView(highscoreText);
 
         // Button für unterschiedliche Level erstellen
         // Lambda-Funktion: kompakt Klick-Listener schreiben

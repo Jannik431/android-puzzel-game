@@ -28,7 +28,7 @@ public class Level1Activity extends AppCompatActivity {
 
     private boolean isRunning = false;
 
-    private long remainingTime = 20000;
+    private long remainingTime = 200000;
 
     private Button startStopButton;
 
@@ -55,6 +55,7 @@ public class Level1Activity extends AppCompatActivity {
         formenListe.add(FormFactory.getFalschesL());
         formenListe.add(FormFactory.getGrossesT());
         formenListe.add(FormFactory.getIForm());
+        formenListe.add(FormFactory.getMikroRechteck());
 
         // FormPalette zeigt diesen Formen
         this.paletteView = new FormPaletteView (this, formenListe);

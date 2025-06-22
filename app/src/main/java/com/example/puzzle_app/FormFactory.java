@@ -90,7 +90,7 @@ public class FormFactory {
     {
         return new Form(new int[][]
                 {
-                        {6,6,6},
+//                        {6,6,6},
                         {6,6,6},
                         {6,6,6},
                         {6,6,6},
@@ -159,6 +159,15 @@ public class FormFactory {
                         {10,10,10,10,10,10},
                 },10);
     }
+    public static Form getMikroRechteck()
+    {
+        return new Form(new int[][]
+                {
+                        {11}
+                },11);
+    }
+
+
 
     /**
      * Gibt basierend auf der formId eine neue Form zurück.
@@ -188,6 +197,8 @@ public class FormFactory {
                 return getGrossesT();
             case 10:
                 return getFalschesL();
+            case 11:
+                return getMikroRechteck();
             default:
                 return null;
         }
