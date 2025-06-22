@@ -1,6 +1,7 @@
 package com.example.puzzle_app;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -15,6 +16,8 @@ public class LevelCompletedActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         System.out.println("LevelCompletedActivity wird ausgeführt (debug)");
+        SharedPreferences prefs = getSharedPreferences("highscore", MODE_PRIVATE);
+        long bestTime = prefs.getLong("level1_time", Long.MAX_VALUE);
         long timePassed = getIntent().getLongExtra("timePassed", 0);
         int dummyHighscore = 15;
 
@@ -42,10 +45,14 @@ public class LevelCompletedActivity extends AppCompatActivity {
 
         // HighScore anzeigen
         TextView highscoreView = new TextView(this);
-        if(seconds<dummyHighscore)
-            highscoreView.setText("Damit schlägst du den bisherigen Highscore von " + dummyHighscore + " Sekunden");
+//        if(seconds<dummyHighscore)
+        if(timePassed < bestTime){
+            highscoreView.setText("Damit schlägst du den bisherigen Highscore von " + bestTime/100 + " Sekunden");
+            prefs.edit().putLong("level1_time", timePassed).apply();
+
+        }
         else
-            highscoreView.setText("Den Highscore von " + dummyHighscore + " Sekunden schlägst du damit aber nicht");
+            highscoreView.setText("Den Highscore von " + bestTime/1000 + " Sekunden schlägst du damit aber nicht");
         highscoreView.setTextSize(18);
         highscoreView.setGravity(Gravity.CENTER);
         highscoreView.setTextColor(Color.DKGRAY);
