@@ -149,6 +149,7 @@ public class Level1Activity extends AppCompatActivity {
                     Thread.sleep(1000);
                     if (spielfeld != null && spielfeld.isComplete()) {
                         runOnUiThread(() -> {
+                            stopTimer();
                             Intent intent = new Intent(Level1Activity.this, LevelCompletedActivity.class);
                             System.out.println("Starte jetzt LevelCompletedActivity (debug)");
                             startActivity(intent);
