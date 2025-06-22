@@ -27,8 +27,9 @@ public class Level1Activity extends AppCompatActivity {
     private FormPaletteView paletteView;
 
     private boolean isRunning = false;
-
-    private long remainingTime = 50000;
+    private static final long START_TIME = 60000;
+//    private long remainingTime = 50000;
+    private long remainingTime;
 
     private Button startStopButton;
 
@@ -40,7 +41,7 @@ public class Level1Activity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        this.remainingTime = START_TIME; // Neu
         // Spielfeld vorbereiten
         this.spielfeld = new GameBoard(10,10);
 
@@ -149,8 +150,10 @@ public class Level1Activity extends AppCompatActivity {
                     Thread.sleep(1000);
                     if (spielfeld != null && spielfeld.isComplete()) {
                         runOnUiThread(() -> {
+                            long timePassed = START_TIME - remainingTime;
                             stopTimer();
                             Intent intent = new Intent(Level1Activity.this, LevelCompletedActivity.class);
+                            intent.putExtra("timePassed", timePassed);
                             System.out.println("Starte jetzt LevelCompletedActivity (debug)");
                             startActivity(intent);
                         });

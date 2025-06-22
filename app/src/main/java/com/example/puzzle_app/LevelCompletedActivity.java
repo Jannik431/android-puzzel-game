@@ -15,6 +15,8 @@ public class LevelCompletedActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         System.out.println("LevelCompletedActivity wird ausgeführt (debug)");
+        long timePassed = getIntent().getLongExtra("timePassed", 0);
+        int dummyHighscore = 15;
 
         // Layout erstellen
         LinearLayout layout = new LinearLayout(this);
@@ -30,6 +32,25 @@ public class LevelCompletedActivity extends AppCompatActivity {
         message.setGravity(Gravity.CENTER);
         message.setTextColor(Color.BLACK);
 
+        // Zeit anzeigen
+        TextView timeView = new TextView(this);
+        int seconds = (int) (timePassed / 1000);
+        timeView.setText("In nur " + seconds + " Sekunden :O");
+        timeView.setTextSize(18);
+        timeView.setGravity(Gravity.CENTER);
+        timeView.setTextColor(Color.DKGRAY);
+
+        // HighScore anzeigen
+        TextView highscoreView = new TextView(this);
+        if(seconds<dummyHighscore)
+            highscoreView.setText("Damit schlägst du den bisherigen Highscore von " + dummyHighscore + " Sekunden");
+        else
+            highscoreView.setText("Den Highscore von " + dummyHighscore + " Sekunden schlägst du damit aber nicht");
+        highscoreView.setTextSize(18);
+        highscoreView.setGravity(Gravity.CENTER);
+        highscoreView.setTextColor(Color.DKGRAY);
+
+
         // Haus-Button
         Button hausButton = new Button(this);
         hausButton.setText("\uD83C\uDFE0");
@@ -43,6 +64,8 @@ public class LevelCompletedActivity extends AppCompatActivity {
 
         // Hinzufügen zur Ansicht
         layout.addView(message);
+        layout.addView(timeView);
+        layout.addView(highscoreView);
         layout.addView(hausButton);
 
         setContentView(layout);
