@@ -28,7 +28,7 @@ public class Level1Activity extends AppCompatActivity {
 
     private boolean isRunning = false;
 
-    private long remainingTime = 200000;
+    private long remainingTime = 50000;
 
     private Button startStopButton;
 
@@ -142,6 +142,25 @@ public class Level1Activity extends AppCompatActivity {
         // Layout setzen
         setContentView(hauptLayout);
 
+//        // Thread zur Überwachung, ob das Level abgeschlossen ist
+        new Thread(() -> {
+            try {
+                while (true) {
+                    Thread.sleep(1000);
+                    if (spielfeld != null && spielfeld.isComplete()) {
+                        runOnUiThread(() -> {
+                            Intent intent = new Intent(Level1Activity.this, LevelCompletedActivity.class);
+                            System.out.println("Starte jetzt LevelCompletedActivity (debug)");
+                            startActivity(intent);
+                        });
+                        break;
+                    }
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
+
         this.startTimer();
     }
 
@@ -216,5 +235,6 @@ public class Level1Activity extends AppCompatActivity {
             this.countDownTimer.cancel();
         }
     }
+
 
 }
