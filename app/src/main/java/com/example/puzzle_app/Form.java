@@ -26,6 +26,12 @@ public class Form {
 
     private int formId;
 
+    /**
+     * Gibt an wie oft eine Form gesetzt werden darf
+     */
+    private int verbleibendeAnzahl = Integer.MAX_VALUE; // Standard = unbegrenzt
+
+
     public Form(int[][] form)
     {
         this.form = form;
@@ -70,4 +76,19 @@ public class Form {
     public int getFormId(){
         return formId;
     }
+
+    public int getVerbleibendeAnzahl() {
+        return verbleibendeAnzahl;
+    }
+
+    public void setVerbleibendeAnzahl(int verbleibendeAnzahl) {
+        this.verbleibendeAnzahl = verbleibendeAnzahl;
+    }
+
+    public void decrementAnzahl() {
+        if (verbleibendeAnzahl > 0) {
+            verbleibendeAnzahl--;
+        }
+    }
+
 }

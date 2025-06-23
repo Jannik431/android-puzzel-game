@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Level1Activity extends AppCompatActivity {
@@ -39,29 +40,49 @@ public class Level1Activity extends AppCompatActivity {
 
     private ActivityResultLauncher<Intent> pauseActivityLauncher;
 
+    private FormManager formManager;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.remainingTime = START_TIME; // Neu
         // Spielfeld vorbereiten
-        this.spielfeld = new GameBoard(10,10);
+        this.spielfeld = new GameBoard(5,5);
 
         // GameView zeigt nur das Spielfeld (aktuelle Form = null)
+        this.paletteView = new FormPaletteView(this, new ArrayList<>()); // noch leer
+
+        // Formen mit Limit anlegen
+        Form lForm = FormFactory.getGrossesL();
+        lForm.setVerbleibendeAnzahl(1);
+
+        Form iForm = FormFactory.getIForm();
+        iForm.setVerbleibendeAnzahl(1);
+
+        Form rect1 = FormFactory.getKleinesRechteck();
+        rect1.setVerbleibendeAnzahl(1);
+
+        Form rect2 = FormFactory.getKleinesRechteck();
+        rect2.setVerbleibendeAnzahl(1);
+
+        Form rect3 = FormFactory.getKleinesRechteck();
+        rect3.setVerbleibendeAnzahl(1);
+
+        Form rect4 = FormFactory.getMikroRechteck();
+        rect4.setVerbleibendeAnzahl(1);
+
+        Form rect5 = FormFactory.getMikroRechteck();
+        rect5.setVerbleibendeAnzahl(1);
+
+
+        List<Form> formenListe = Arrays.asList(lForm, iForm, rect1, rect2, rect3, rect4, rect5);
+
+        // FormManager erzeugen
+        this.formManager = new FormManager(formenListe, paletteView);
+
+        // GameView anlegen & mit Manager verknüpfen
         this.gameView = new GameView(this, this.spielfeld, null);
-
-        // Liste von Formen für die Miniaturanzeige
-        List<Form> formenListe = new ArrayList<>();
-        formenListe.add(FormFactory.getGrossesL());
-        formenListe.add(FormFactory.getGrossesRechteck());
-        formenListe.add(FormFactory.getTForm());
-        formenListe.add(FormFactory.getFalschesL());
-        formenListe.add(FormFactory.getGrossesT());
-        formenListe.add(FormFactory.getIForm());
-        formenListe.add(FormFactory.getMikroRechteck());
-
-        // FormPalette zeigt diesen Formen
-        this.paletteView = new FormPaletteView (this, formenListe);
-        // Neu -> GameView bekommt die Referenz auf die Palette
-        this.gameView.setFormPaletteView(this.paletteView);
+        this.gameView.setFormManager(formManager);
+        this.gameView.setFormPaletteView(paletteView);
 
         // Hauptlayout vertikal ausrichten
         LinearLayout hauptLayout = new LinearLayout(this);

@@ -53,7 +53,7 @@ public class GameView extends View{
 
     private FormPaletteView formPaletteView;
 
-
+    private FormManager formManager;
 
     /**
      * Konstruktor, der ein Spielfeld und eine com.example.puzzle_app.Form zuweist und die Darstellungen festlegt
@@ -214,33 +214,43 @@ public class GameView extends View{
      *              verfügt um ein click und dessen Koordinaten zu registrieren
      */
     public boolean onTouchEvent(MotionEvent event) {
-        // Prüft ob das registrierte Event ein user click ist (ACTION_DOWN)
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            // Speichert die Koordinaten des Klicks
             float x = event.getX();
             float y = event.getY();
 
-            // Ausgabe der rohen X/Y-Koordinaten
             System.out.println("GameView " + "Touch bei Pixel-Koordinaten: X=" + x + ", Y=" + y);
 
-            // Umrechnung in Zell-Koordinaten
             int spalte = (int) (x / zellenGroesse);
-            int reihe = (int) (y / zellenGroesse);
+            int reihe  = (int) (y / zellenGroesse);
+
             System.out.println("GameView " + "Touch in Spielfeld-Zelle: [" + reihe + ", " + spalte + "]");
 
             invalidate(); // View neu zeichnen
 
-            // Form von GameView entfernen, wenn die geklickte Koordinate =! 0 ist (belegt)
-            // Diesen Code Abschnitt habe ich vorrübergehen deaktiviert weil das entfernen einzelnzer Formen buggy ist
-              boolean codeAbschnittIstAktiv = false;
-              if(codeAbschnittIstAktiv){
-//            if(spielfeld.getGridPointValue(reihe, spalte) != 0){
+            boolean codeAbschnittIstAktiv = false;
+            if (codeAbschnittIstAktiv) {
                 spielfeld.removeForm(spielfeld.getGridPointValue(spalte, reihe));
-            }
-            // Form zur GameView hinzufügen, wenn angeklickte Koordinate == 0 ist (noch frei)
-            else {
-                if (formPaletteView != null && formPaletteView.getAngeklickteForm() != null) { // NullPointer check
-                    spielfeld.placeForm(formPaletteView.getAngeklickteForm(), reihe, spalte);
+            } else {
+                // Neu: über Palette angeklickte Form holen
+                if (formPaletteView != null && formPaletteView.getAngeklickteForm() != null) {
+                    Form aktuelleForm = formPaletteView.getAngeklickteForm();
+
+                    // Prüfen ob Form noch verfügbar ist und platzierbar
+                    if (aktuelleForm.getVerbleibendeAnzahl() > 0 &&
+                            spielfeld.canPlace(aktuelleForm, reihe, spalte)) {
+
+                        // Platzieren
+                        spielfeld.placeForm(aktuelleForm, reihe, spalte);
+
+                        // Verbleibende Anzahl reduzieren & Palette aktualisieren
+                        if (formManager != null) {
+                            formManager.decrement(aktuelleForm);
+                        }
+
+                        invalidate(); // Neu zeichnen
+                    } else {
+                        System.out.println("Form kann hier nicht platziert werden oder ist aufgebraucht.");
+                    }
                 } else {
                     System.out.println("Es wurde keine Form angeklickt!");
                 }
@@ -248,5 +258,10 @@ public class GameView extends View{
             return true;
         }
         return false;
+    }
+
+
+    public void setFormManager(FormManager manager) {
+        this.formManager = manager;
     }
 }

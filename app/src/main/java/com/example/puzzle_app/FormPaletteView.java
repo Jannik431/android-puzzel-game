@@ -228,7 +228,7 @@ public class FormPaletteView extends View{
             for (int i = 0; i < klickbereiche.size(); i++) {
                 Rect r = klickbereiche.get(i);
                 if (r.contains((int)x, (int)y)) {
-                    angeklickteForm = FormFactory.getFormById(formen.get(i).getFormId());
+                    angeklickteForm = formen.get(i);
                     invalidate();
                     break;
                 }
