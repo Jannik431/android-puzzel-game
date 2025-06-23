@@ -65,7 +65,6 @@ public class FormFactory {
     }
 
     /**
-     * Form für schweres Level.
      * 5x4
      * @return Form
      */
@@ -82,19 +81,12 @@ public class FormFactory {
     }
 
     /**
-     * Form für schweres Level.
-     * 3x6
      * @return Form
      */
-    public static Form getGrossesRechteck()
+    public static Form getLiegendesI()
     {
         return new Form(new int[][]
                 {
-//                        {6,6,6},
-                        {6,6,6},
-                        {6,6,6},
-                        {6,6,6},
-                        {6,6,6},
                         {6,6,6}
                 },6);
     }
@@ -104,13 +96,14 @@ public class FormFactory {
      * 3x3
      * @return Form
      */
-    public static Form getRechteck()
+    public static Form getMittleresI()
     {
         return new Form(new int[][]
                 {
-                        {7,7,7},
-                        {7,7,7},
-                        {7,7,7}
+                        {7},
+                        {7},
+                        {7},
+                        {7}
                 },7);
     }
 
@@ -132,39 +125,23 @@ public class FormFactory {
      * Form für schweres Level.
      * @return Form
      */
-    public static Form getGrossesT()
+    public static Form getZ()
     {
         return new Form(new int[][]
                 {
-                        {9,9,9,9,9,9},
-                        {0,0,0,9,0,0},
-                        {0,0,0,9,0,0}
+                        {9,0,0},
+                        {9,9,9},
+                        {0,0,9}
                 },9);
     }
 
-    /**
-     * Form für schweres Level
-     * @return Form
-     */
-    public static Form getFalschesL()
-    {
-        return new Form(new int[][]
-                {
-                        {0,0,0,10,10,10},
-                        {0,0,0,10,10,10},
-                        {0,0,0,10,10,10},
-                        {0,0,0,10,10,10},
-                        {10,10,10,10,10,10},
-                        {10,10,10,10,10,10},
-                        {10,10,10,10,10,10},
-                },10);
-    }
+
     public static Form getMikroRechteck()
     {
         return new Form(new int[][]
                 {
-                        {11}
-                },11);
+                        {10}
+                },10);
     }
 
 
@@ -188,16 +165,15 @@ public class FormFactory {
             case 5:
                 return getGrossesL();
             case 6:
-                return getGrossesRechteck();
+                return getLiegendesI();
             case 7:
-                return getRechteck();
+                return getMittleresI();
             case 8:
                 return getKleinesRechteck();
             case 9:
-                return getGrossesT();
+                return getZ();
+
             case 10:
-                return getFalschesL();
-            case 11:
                 return getMikroRechteck();
             default:
                 return null;

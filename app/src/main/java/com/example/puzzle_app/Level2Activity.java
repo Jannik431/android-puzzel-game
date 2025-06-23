@@ -1,78 +1,8 @@
-//package com.example.puzzle_app;
-//
-//import android.os.Bundle;
-//import android.view.Gravity;
-//import android.widget.LinearLayout;
-//
-//import androidx.appcompat.app.AppCompatActivity;
-//
-//import java.util.ArrayList;
-//import java.util.List;
-//
-//public class Level2Activity extends AppCompatActivity {
-//    private GameView gameView;
-//    private GameBoard spielfeld;
-//    private Form form;
-//    private GameBoardPrinter gameBoardPrinter;
-//    private FormPaletteView paletteView;
-//
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//
-//        // Spielfeld vorbereiten
-//        this.spielfeld = new GameBoard(10,10);
-//
-//        // GameView zeigt nur das Spielfeld (aktuelle Form = null)
-//        this.gameView = new GameView(this, this.spielfeld, null);
-//
-//        // Liste von Formen für die Miniaturanzeige
-//        List<Form> formenListe = new ArrayList<>();
-//        formenListe.add(FormFactory.getGrossesL());
-//        formenListe.add(FormFactory.getGrossesRechteck());
-//        formenListe.add(FormFactory.getTForm());
-//        formenListe.add(FormFactory.getFalschesL());
-//        formenListe.add(FormFactory.getGrossesT());
-//        formenListe.add(FormFactory.getIForm());
-//
-//        // FormPalette zeigt diesen Formen
-//        this.paletteView = new FormPaletteView (this, formenListe);
-//        // Neu -> GameView bekommt die Referenz auf die Palette
-//        this.gameView.setFormPaletteView(this.paletteView);
-//
-//        // Hauptlayout vertikal ausrichten
-//        LinearLayout hauptLayout = new LinearLayout(this);
-//        hauptLayout.setOrientation(LinearLayout.VERTICAL);
-//        hauptLayout.setGravity(Gravity.CENTER);
-//        hauptLayout.setPadding(20,20,20,20);
-//        hauptLayout.setBackgroundResource(R.drawable.wood_background);
-//
-//        // GameView zum Layout hinzufügen
-//        LinearLayout.LayoutParams gameParams = new LinearLayout.LayoutParams(
-//                LinearLayout.LayoutParams.WRAP_CONTENT,
-//                LinearLayout.LayoutParams.WRAP_CONTENT
-//        );
-//        hauptLayout.addView(gameView, gameParams);
-//
-//        // PaletteView darunter einfügen
-//        LinearLayout.LayoutParams paletteParams = new LinearLayout.LayoutParams(
-//                LinearLayout.LayoutParams.WRAP_CONTENT,
-//                LinearLayout.LayoutParams.WRAP_CONTENT
-//        );
-//        paletteParams.topMargin = 50;
-//        hauptLayout.addView(paletteView, paletteParams);
-//
-//        // Layout setzen
-//        setContentView(hauptLayout);
-//    }
-//}
-
-
 package com.example.puzzle_app;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.Gravity;
@@ -83,52 +13,50 @@ import android.widget.TextView;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Level2Activity extends AppCompatActivity {
     private GameView gameView;
     private GameBoard spielfeld;
-    private Form form;
-    private GameBoardPrinter gameBoardPrinter;
     private FormPaletteView paletteView;
-
     private boolean isRunning = false;
-
-    private long remainingTime = 20000;
-
+    private static final long START_TIME = 25000;
+    private long remainingTime;
     private Button startStopButton;
-
     private CountDownTimer countDownTimer;
-
     private TextView timerText;
-
     private ActivityResultLauncher<Intent> pauseActivityLauncher;
+    private FormManager formManager;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        this.remainingTime = START_TIME; // Neu
         // Spielfeld vorbereiten
-        this.spielfeld = new GameBoard(10,10);
+        this.spielfeld = new GameBoard(5,5);
 
         // GameView zeigt nur das Spielfeld (aktuelle Form = null)
+        this.paletteView = new FormPaletteView(this, new ArrayList<>()); // noch leer
+
+        Form l = FormFactory.getLForm();                l.setVerbleibendeAnzahl(1);
+        Form t = FormFactory.getTForm();                t.setVerbleibendeAnzahl(1);
+        Form iLang = FormFactory.getILangForm();        iLang.setVerbleibendeAnzahl(1);
+        Form square = FormFactory.getKleinesRechteck(); square.setVerbleibendeAnzahl(1);
+        Form iKurz = FormFactory.getIForm();            iKurz.setVerbleibendeAnzahl(1);
+        Form mikro = FormFactory.getMikroRechteck();    mikro.setVerbleibendeAnzahl(1);
+        Form liegendesI = FormFactory.getLiegendesI(); liegendesI.setVerbleibendeAnzahl(1);
+
+        List<Form> formenListe = Arrays.asList(l, t, iLang, square, iKurz, mikro, liegendesI);
+
+        // FormManager erzeugen
+        this.formManager = new FormManager(formenListe, paletteView);
+
+        // GameView anlegen & mit Manager verknüpfen
         this.gameView = new GameView(this, this.spielfeld, null);
-
-        // Liste von Formen für die Miniaturanzeige
-        List<Form> formenListe = new ArrayList<>();
-        formenListe.add(FormFactory.getGrossesL());
-        formenListe.add(FormFactory.getGrossesRechteck());
-        formenListe.add(FormFactory.getTForm());
-        formenListe.add(FormFactory.getFalschesL());
-        formenListe.add(FormFactory.getGrossesT());
-        formenListe.add(FormFactory.getIForm());
-
-        // FormPalette zeigt diesen Formen
-        this.paletteView = new FormPaletteView (this, formenListe);
-        // Neu -> GameView bekommt die Referenz auf die Palette
-        this.gameView.setFormPaletteView(this.paletteView);
+        this.gameView.setFormManager(formManager);
+        this.gameView.setFormPaletteView(paletteView);
 
         // Hauptlayout vertikal ausrichten
         LinearLayout hauptLayout = new LinearLayout(this);
@@ -191,8 +119,7 @@ public class Level2Activity extends AppCompatActivity {
                         Intent data = result.getData();
                         boolean removeAll = data.getBooleanExtra("removeAll", false);
                         if (removeAll) {
-                            spielfeld.removeAll();
-                            gameView.invalidate();
+                            this.resetGame();
                         }
                         boolean goHome = data.getBooleanExtra("goHome", false);
                         if (goHome) {
@@ -209,6 +136,28 @@ public class Level2Activity extends AppCompatActivity {
 
         // Layout setzen
         setContentView(hauptLayout);
+
+//        // Thread zur Überwachung, ob das Level abgeschlossen ist
+        new Thread(() -> {
+            try {
+                while (true) {
+                    Thread.sleep(1000);
+                    if (spielfeld != null && spielfeld.isComplete()) {
+                        runOnUiThread(() -> {
+                            long timePassed = START_TIME - remainingTime;
+                            stopTimer();
+                            Intent intent = new Intent(Level2Activity.this, LevelCompletedActivity.class);
+                            intent.putExtra("timePassed", timePassed);
+                            System.out.println("Starte jetzt LevelCompletedActivity (debug)");
+                            startActivity(intent);
+                        });
+                        break;
+                    }
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
 
         this.startTimer();
     }
@@ -285,8 +234,24 @@ public class Level2Activity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Spiel wird zurückgesetzt. Spielfeld wird gelert und Formen zurückgesetzt.
+     */
+    private void resetGame() {
+        // Spielfeld löschen
+        spielfeld.removeAll();
+        gameView.invalidate();
+
+        // Formen zurücksetzen
+        for (Form f : formManager.getAlleFormen()) {
+            f.setVerbleibendeAnzahl(1);
+        }
+
+        // PaletteView neu setzen & aktualisieren
+        paletteView.setFormen(formManager.getAlleFormen());
+        paletteView.invalidate();
+    }
+
+
+
 }
-
-
-
-

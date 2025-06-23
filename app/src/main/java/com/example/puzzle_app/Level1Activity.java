@@ -3,7 +3,6 @@ package com.example.puzzle_app;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.Gravity;
@@ -14,7 +13,6 @@ import android.widget.TextView;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,23 +21,14 @@ import java.util.List;
 public class Level1Activity extends AppCompatActivity {
     private GameView gameView;
     private GameBoard spielfeld;
-    private Form form;
-    private GameBoardPrinter gameBoardPrinter;
     private FormPaletteView paletteView;
-
     private boolean isRunning = false;
-    private static final long START_TIME = 60000;
-//    private long remainingTime = 50000;
+    private static final long START_TIME = 20000;
     private long remainingTime;
-
     private Button startStopButton;
-
     private CountDownTimer countDownTimer;
-
     private TextView timerText;
-
     private ActivityResultLauncher<Intent> pauseActivityLauncher;
-
     private FormManager formManager;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,8 +134,7 @@ public class Level1Activity extends AppCompatActivity {
                         Intent data = result.getData();
                         boolean removeAll = data.getBooleanExtra("removeAll", false);
                         if (removeAll) {
-                            spielfeld.removeAll();
-                            gameView.invalidate();
+                            this.resetGame();
                         }
                         boolean goHome = data.getBooleanExtra("goHome", false);
                         if (goHome) {
@@ -260,6 +248,25 @@ public class Level1Activity extends AppCompatActivity {
             this.countDownTimer.cancel();
         }
     }
+
+    /**
+     * Spiel wird zurückgesetzt. Spielfeld wird gelert und Formen zurückgesetzt.
+     */
+    private void resetGame() {
+        // Spielfeld löschen
+        spielfeld.removeAll();
+        gameView.invalidate();
+
+        // Formen zurücksetzen
+        for (Form f : formManager.getAlleFormen()) {
+            f.setVerbleibendeAnzahl(1);
+        }
+
+        // PaletteView neu setzen & aktualisieren
+        paletteView.setFormen(formManager.getAlleFormen());
+        paletteView.invalidate();
+    }
+
 
 
 }
