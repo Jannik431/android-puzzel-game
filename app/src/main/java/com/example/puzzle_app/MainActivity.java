@@ -1,6 +1,7 @@
 package com.example.puzzle_app;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -34,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        SharedPreferences prefs = getSharedPreferences("highscore", MODE_PRIVATE);
+        long bestTime = prefs.getLong("level1_time", Long.MAX_VALUE);
+
 
         // Einfaches vertikales Layout
         LinearLayout layout = new LinearLayout(this);
@@ -45,7 +49,12 @@ public class MainActivity extends AppCompatActivity {
 
         // Highscore TextView ganz oben einfügen
         TextView highscoreText = new TextView(this);
-        highscoreText.setText("Highscore: 120"); // Beispielwert
+        if (bestTime != Long.MAX_VALUE) {
+            highscoreText.setText("Highscore: " + (bestTime / 1000) + " Sekunden");
+        } else {
+            highscoreText.setText("Noch kein Highscore");
+        }
+//        highscoreText.setText("Highscore: 120"); // Beispielwert
         highscoreText.setTextSize(22);
         highscoreText.setTextColor(Color.WHITE);
         highscoreText.setPadding(0, 0, 0, 50);

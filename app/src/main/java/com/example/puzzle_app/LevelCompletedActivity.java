@@ -27,13 +27,14 @@ public class LevelCompletedActivity extends AppCompatActivity {
         layout.setGravity(Gravity.CENTER);
         layout.setBackgroundColor(Color.WHITE);
         layout.setPadding(50, 50, 50, 50);
+        layout.setBackgroundResource(R.drawable.wood_background);
 
         // Nachricht
         TextView message = new TextView(this);
         message.setText("Level Completed!");
         message.setTextSize(24);
         message.setGravity(Gravity.CENTER);
-        message.setTextColor(Color.BLACK);
+        message.setTextColor(Color.WHITE);
 
         // Zeit anzeigen
         TextView timeView = new TextView(this);
@@ -41,13 +42,13 @@ public class LevelCompletedActivity extends AppCompatActivity {
         timeView.setText("In nur " + seconds + " Sekunden :O");
         timeView.setTextSize(18);
         timeView.setGravity(Gravity.CENTER);
-        timeView.setTextColor(Color.DKGRAY);
+        timeView.setTextColor(Color.WHITE);
 
         // HighScore anzeigen
         TextView highscoreView = new TextView(this);
 //        if(seconds<dummyHighscore)
         if(timePassed < bestTime){
-            highscoreView.setText("Damit schlägst du den bisherigen Highscore von " + bestTime/100 + " Sekunden");
+            highscoreView.setText("Damit schlägst du den bisherigen Highscore von " + bestTime/1000 + " Sekunden");
             prefs.edit().putLong("level1_time", timePassed).apply();
 
         }
@@ -55,7 +56,7 @@ public class LevelCompletedActivity extends AppCompatActivity {
             highscoreView.setText("Den Highscore von " + bestTime/1000 + " Sekunden schlägst du damit aber nicht");
         highscoreView.setTextSize(18);
         highscoreView.setGravity(Gravity.CENTER);
-        highscoreView.setTextColor(Color.DKGRAY);
+        highscoreView.setTextColor(Color.WHITE);
 
 
         // Haus-Button
