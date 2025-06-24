@@ -18,6 +18,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Level-Activity, die nach Auswahl im MainScreen aufgerufen wird.
+ * Mittleres Tetris-Level
+ * Formen können per Klick ins Spielfeld gesetzt werden.
+ * Ziel ist es, das Spielfeld komplett mit Formen zu füllen, bevor die Zeit abläuft.
+ */
 public class Level2Activity extends AppCompatActivity {
     private GameView gameView;
     private GameBoard spielfeld;

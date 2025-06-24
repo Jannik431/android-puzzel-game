@@ -9,6 +9,14 @@ import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * Diese Activity wird aufgerufen, wenn in einem der Level auf den Pause-Button geklickt wird.
+ * Die Zeit wird angehalten.
+ * Man hat die Optionen:
+ * - weiterspielen
+ * - reset: Spielfeld wird gelert und Formen zurückgesetzt
+ * - zurück zum Hauptmenü
+ */
 public class PauseActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {

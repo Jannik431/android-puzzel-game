@@ -11,6 +11,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * Die GameOverActivity wird angezeigt, wenn der Spieler das Zeitlimit erreicht hat
+ * Per Button lässt sich zurück zum Hauptmenü navigieren
+ */
 public class GameOverActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState)

@@ -11,6 +11,11 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * Activity, die aufgerufen wird, wenn man das gespielte Level erfolgreich abgeschlossen hat.
+ * Es wird die gebrauchte Zeit angezeigt und ob man den Highscore geschlagen hat.
+ * Per Button kann man zurück zum Hauptmenü navigieren.
+ */
 public class LevelCompletedActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

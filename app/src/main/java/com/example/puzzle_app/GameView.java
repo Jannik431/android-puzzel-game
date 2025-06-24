@@ -51,8 +51,14 @@ public class GameView extends View{
      */
     private int zellGroesse = 70;
 
+    /**
+     * Referenz auf die Miniaturdarstellung FormPaletteView
+     */
     private FormPaletteView formPaletteView;
 
+    /**
+     * Referenz auf den FormManager
+     */
     private FormManager formManager;
 
     /**
@@ -260,7 +266,10 @@ public class GameView extends View{
         return false;
     }
 
-
+    /**
+     * Die IV FormManager wird gesetzt
+     * @param manager FormManager der gesetzt werden soll
+     */
     public void setFormManager(FormManager manager) {
         this.formManager = manager;
     }

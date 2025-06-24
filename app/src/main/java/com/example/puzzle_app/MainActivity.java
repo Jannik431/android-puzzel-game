@@ -21,7 +21,11 @@ import java.util.List;
 import java.util.ArrayList;
 
 
-
+/**
+ * Activity, die beim Starten der App aufgerufen wird.
+ * Es wird der aktuelle HighScore angezeigt.
+ * Per Button lässt sich zu den Leveln 1-3 navigieren
+ */
 public class MainActivity extends AppCompatActivity {
 
     private GameView gameView;

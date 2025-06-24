@@ -48,9 +48,8 @@ public class FormFactory {
     }
 
     /**
-     * Form für schweres Level
-     * 1x5
-     * @return Form
+     * Methode gibt eine verlängerte ILang-com.example.puzzle_app.Form zurück.
+     * @return ILang-com.example.puzzle_app.Form
      */
     public static Form getILangForm()
     {
@@ -65,8 +64,8 @@ public class FormFactory {
     }
 
     /**
-     * 5x4
-     * @return Form
+     * Methode gibt eine vergrößerte GrossesL-com.example.puzzle_app.Form zurück.
+     * @return GrossesL-com.example.puzzle_app.Form
      */
     public static Form getGrossesL()
     {
@@ -81,7 +80,8 @@ public class FormFactory {
     }
 
     /**
-     * @return Form
+     * Methode gibt eine liegende LiegendesI-com.example.puzzle_app.Form zurück.
+     * @return LiegendesI-com.example.puzzle_app.Form
      */
     public static Form getLiegendesI()
     {
@@ -92,9 +92,8 @@ public class FormFactory {
     }
 
     /**
-     * Form für schweres Level.
-     * 3x3
-     * @return Form
+     * Methode gibt eine mittellange MitlleresI-com.example.puzzle_app.Form zurück.
+     * @return MitlleresI-com.example.puzzle_app.Form
      */
     public static Form getMittleresI()
     {
@@ -108,9 +107,8 @@ public class FormFactory {
     }
 
     /**
-     * Form für schweres Level
-     * 2x2
-     * @return Form
+     * Methode gibt eine kleines Rechteck kleinesRechteck-com.example.puzzle_app.Form zurück.
+     * @return kleinesRechteck-com.example.puzzle_app.Form
      */
     public static Form getKleinesRechteck()
     {
@@ -122,8 +120,8 @@ public class FormFactory {
     }
 
     /**
-     * Form für schweres Level.
-     * @return Form
+     * Methode gibt eine liegende Z-com.example.puzzle_app.Form zurück.
+     * @return Z-com.example.puzzle_app.Form
      */
     public static Form getZ()
     {
@@ -135,7 +133,10 @@ public class FormFactory {
                 },9);
     }
 
-
+    /**
+     * Methode gibt eine sehr kleines Rechteck MikroRechteck-com.example.puzzle_app.Form zurück.
+     * @return MikroRechteck-com.example.puzzle_app.Form
+     */
     public static Form getMikroRechteck()
     {
         return new Form(new int[][]
@@ -143,8 +144,6 @@ public class FormFactory {
                         {10}
                 },10);
     }
-
-
 
     /**
      * Gibt basierend auf der formId eine neue Form zurück.

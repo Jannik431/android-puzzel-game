@@ -20,10 +20,8 @@ public class Form {
     private int [][] form; // 1 = belegt, 0 = leer
 
     /**
-     * Konstruktor der Klasse com.example.puzzle_app.Form, der ein com.example.puzzle_app.Form-Objekt erzeugt
-     * @param form com.example.puzzle_app.Form die erzeugt werden soll
+     * Id der com.example.puzzle_app.Form
      */
-
     private int formId;
 
     /**
@@ -31,13 +29,22 @@ public class Form {
      */
     private int verbleibendeAnzahl = Integer.MAX_VALUE; // Standard = unbegrenzt
 
-
+    /**
+     * Konstruktor der Klasse com.example.puzzle_app.Form, der ein com.example.puzzle_app.Form-Objekt erzeugt
+     * @param form com.example.puzzle_app.Form die refernziert werden soll
+     */
     public Form(int[][] form)
     {
         this.form = form;
         this.hoehe = form.length;
         this.breite = form[0].length;
     }
+
+    /**
+     * Konstruktor der Klasse Form
+     * @param form Form die referenziert werden soll
+     * @param formId ID der Form
+     */
     public Form(int[][] form, int formId)
     {
         this.form = form;
@@ -73,18 +80,33 @@ public class Form {
         return this.breite;
     }
 
+    /**
+     * Methode gibt die ID der Form zurück
+     * @return ID
+     */
     public int getFormId(){
         return formId;
     }
 
+    /**
+     * Methode gibt an wie oft die Form noch gesetzt werden darf
+     * @return Anzahl der verbleibenden Nutzungen
+     */
     public int getVerbleibendeAnzahl() {
         return verbleibendeAnzahl;
     }
 
+    /**
+     * Methode setzt die IV die angibt, wie oft die Form noch gesetzt werden darf
+     * @param verbleibendeAnzahl
+     */
     public void setVerbleibendeAnzahl(int verbleibendeAnzahl) {
         this.verbleibendeAnzahl = verbleibendeAnzahl;
     }
 
+    /**
+     * Methode verringert die Anzahl der verbleidenen Nutzungen der Form
+     */
     public void decrementAnzahl() {
         if (verbleibendeAnzahl > 0) {
             verbleibendeAnzahl--;
