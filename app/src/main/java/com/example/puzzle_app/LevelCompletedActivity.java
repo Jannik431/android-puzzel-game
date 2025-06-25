@@ -13,18 +13,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Activity, die aufgerufen wird, wenn man das gespielte Level erfolgreich abgeschlossen hat.
- * Es wird die gebrauchte Zeit angezeigt und ob man den Highscore geschlagen hat.
+ * Es wird angezeigt, wie viel Zeit man gebraucht hat und ob man den Highscore geschlagen hat.
  * Per Button kann man zurück zum Hauptmenü navigieren.
  */
 public class LevelCompletedActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        System.out.println("LevelCompletedActivity wird ausgeführt (debug)");
+
+        // Highscore und vergangene Zeit abfragen von Shared Preference
         SharedPreferences prefs = getSharedPreferences("highscore", MODE_PRIVATE);
-        long bestTime = prefs.getLong("level1_time", Long.MAX_VALUE);
-        long timePassed = getIntent().getLongExtra("timePassed", 0);
-        int dummyHighscore = 15;
+        long bestTime = prefs.getLong("level1_time", Long.MAX_VALUE);               // Aktueller Highscore (von SharedPreference)
+        long timePassed = getIntent().getLongExtra("timePassed", 0);  // Vergangene Zeit (von LevelActivity)
+//        int dummyHighscore = 15;
 
         // Layout erstellen
         LinearLayout layout = new LinearLayout(this);
@@ -41,7 +42,7 @@ public class LevelCompletedActivity extends AppCompatActivity {
         message.setGravity(Gravity.CENTER);
         message.setTextColor(Color.WHITE);
 
-        // Zeit anzeigen
+        // Vergangene Zeit anzeigen
         TextView timeView = new TextView(this);
         int seconds = (int) (timePassed / 1000);
         timeView.setText("In nur " + seconds + " Sekunden :O");
@@ -49,13 +50,11 @@ public class LevelCompletedActivity extends AppCompatActivity {
         timeView.setGravity(Gravity.CENTER);
         timeView.setTextColor(Color.WHITE);
 
-        // HighScore anzeigen
+        // HighScore anzeigen. Unterschiedlicher Text je nachdem ob Highscore geschlagen wurde oder nicht
         TextView highscoreView = new TextView(this);
-//        if(seconds<dummyHighscore)
         if(timePassed < bestTime){
             highscoreView.setText("Damit schlägst du den bisherigen Highscore von " + bestTime/1000 + " Sekunden");
             prefs.edit().putLong("level1_time", timePassed).apply();
-
         }
         else
             highscoreView.setText("Den Highscore von " + bestTime/1000 + " Sekunden schlägst du damit aber nicht");
@@ -64,7 +63,7 @@ public class LevelCompletedActivity extends AppCompatActivity {
         highscoreView.setTextColor(Color.WHITE);
 
 
-        // Haus-Button
+        // Haus-Button um zurück zum start screen zu navigieren
         Button hausButton = new Button(this);
         hausButton.setText("\uD83C\uDFE0");
         hausButton.setTextSize(30);

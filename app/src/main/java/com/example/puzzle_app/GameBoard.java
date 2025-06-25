@@ -115,14 +115,7 @@ public class GameBoard {
         } else {
             System.out.println("com.example.puzzle_app.Form kann hier nicht platziert werden.");
         }
-//        if (isComplete()) {
-//            android.os.Handler handler = new android.os.Handler(android.os.Looper.getMainLooper());
-//            handler.post(() -> android.widget.Toast.makeText(
-//                    androidx.test.core.app.ApplicationProvider.getApplicationContext(),
-//                    "Level completed",
-//                    android.widget.Toast.LENGTH_LONG
-//            ).show());
-//        }
+
     }
 
 

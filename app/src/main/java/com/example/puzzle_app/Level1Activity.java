@@ -158,17 +158,20 @@ public class Level1Activity extends AppCompatActivity {
         // Layout setzen
         setContentView(hauptLayout);
 
-//        // Thread zur Überwachung, ob das Level abgeschlossen ist
-        new Thread(() -> {
+        // Thread überwacht ob alle Felder belegt sind
+        new Thread(() -> { // Lambda Schreibweise: ' () -> { ' entspricht public void run()
             try {
                 while (true) {
                     Thread.sleep(1000);
                     if (spielfeld != null && spielfeld.isComplete()) {
-                        runOnUiThread(() -> {
+                        // Nur im UiThread is das Starten von activities erlaubt
+                        runOnUiThread(() -> { // Wieder Lambda: ' () -> { ' entspricht public void run()
                             long timePassed = START_TIME - remainingTime;
                             stopTimer();
+                            // Intent beschreibt die Absicht eines Programms. In diesem Fall eine neue Activity starten.
+                            // Level1Activity ist der Kontext und LevelCompletedActivity die Zielklasse
                             Intent intent = new Intent(Level1Activity.this, LevelCompletedActivity.class);
-                            intent.putExtra("timePassed", timePassed);
+                            intent.putExtra("timePassed", timePassed);  // timepassed wird an LevelCompletedActivity weiter gegeben
                             System.out.println("Starte jetzt LevelCompletedActivity (debug)");
                             startActivity(intent);
                         });
@@ -178,7 +181,7 @@ public class Level1Activity extends AppCompatActivity {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }).start();
+        }).start(); // -> Diesen Thread beim schedular anmelden
 
         this.startTimer();
     }

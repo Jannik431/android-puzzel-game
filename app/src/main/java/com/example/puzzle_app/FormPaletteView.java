@@ -107,7 +107,6 @@ public class FormPaletteView extends View{
             for (Form form : zeile) {
 
                 // Klickbereich für diese Form speichern (onTouchEvent braucht Information)
-                // (!!) Eventuell problematisch (!!) Allocations sollten eigentlich nicht in draw() Methoden stattfinden. Aber ist denke ich erstmal in Ordnung.
                 Rect klickbereich = new Rect(x, y, x + formBlockBreite, y + formBlockHoehe);
                 klickbereiche.add(klickbereich);
 
@@ -210,25 +209,25 @@ public class FormPaletteView extends View{
      */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        // Prüft ob das registrierte Event ein user click ist (ACTION_DOWN)
+        // 1) Prüft ob das registrierte Event ein user click ist (ACTION_DOWN)
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            // Speichert die Koordinaten des Klicks
+            // 2) Speichert die Koordinaten des Klicks
             float x = event.getX();
             float y = event.getY();
 
-            // -- Nur für die Konsole zum Debuggen --
-            System.out.println("FormPaletteView " + "Touch bei Pixel-Koordinaten: X=" + x + ", Y=" + y);
+            System.out.println("FormPaletteView " + "Touch bei Pixel-Koordinaten: X=" + x + ", Y=" + y);                 // Debugging only
 
-            // Umrechnung in Zell-Koordinaten
+            // 3) Umrechnung in Zell-Koordinaten
             int spalte = (int) (x / zellenGroesse);
             int reihe = (int) (y / zellenGroesse);
-            System.out.println("FormPaletteView " + "Touch in Spielfeld-Zelle: [" + reihe + ", " + spalte + "]");
-            // -- Nur für die Konsole zum Debuggen --
 
-            for (int i = 0; i < klickbereiche.size(); i++) {
-                Rect r = klickbereiche.get(i);
-                if (r.contains((int)x, (int)y)) {
-                    angeklickteForm = formen.get(i);
+            System.out.println("FormPaletteView " + "Touch in Spielfeld-Zelle: [" + reihe + ", " + spalte + "]");  // Debugging only
+
+            // 4) Für jede Form prüfen ob der Klick innerhalb des klickbereichs der Form lag (Rechteck)
+            for (int i = 0; i < klickbereiche.size(); i++) { // Über jede Form/Klickbereich wird itteriert
+                Rect r = klickbereiche.get(i);              // r speichert die Koordinaten des aktuell Klickbereichs
+                if (r.contains((int)x, (int)y)) {          // contains() -> Liegen die Klickpunkte (x,y) innerhalb DIESES Klickbereichs?
+                    angeklickteForm = formen.get(i);      // Speichere die angeklickteForm
                     invalidate();
                     break;
                 }
@@ -239,7 +238,8 @@ public class FormPaletteView extends View{
     }
 
     /**
-     * GameView nutzt diesen getter um die aktuell angeklickte Form auf dem Spielfeld zu platzieren
+     * GameView nutzt diesen getter um die aktuell angeklickte Form auf dem Spielfeld zu platzieren.
+     * Diese Form wurde in onTouchEvent ermittelt.
      * @return Gibt die zuletzt angeklickte Form zurück. Kann auch null zurückgeben!
      */
     public Form getAngeklickteForm() {

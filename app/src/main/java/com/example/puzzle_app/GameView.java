@@ -212,20 +212,22 @@ public class GameView extends View{
 
     @Override
     /**
-     * onTouchEvent wird aufgerufen wenn der User auf das Spielfeld klickt.
-     * Sie registriert dann die Koordinaten dieses klicks und legt eine Form an dieser Stelle ab.
-     * Es wird immer die Form gelegt, die zuvor in der formPaletteView angekiclt wurde.
+     * onTouchEvent erkennt und verarbeitet klicks auf das Spielfeld.
+     * Es wird immer die Form gelegt, die zuvor in der formPaletteView angeklickt wurde.
      * Wurde keine Form angeklickt, so pasiert nichts
      * @param event Ein Objekt der Klasse Motion Event welches über die nötigen Methoden
      *              verfügt um ein click und dessen Koordinaten zu registrieren
      */
     public boolean onTouchEvent(MotionEvent event) {
+        // Prüft ob das Event ein klick war
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            // 1) Koordinaten des Klicks speichern
             float x = event.getX();
             float y = event.getY();
 
             System.out.println("GameView " + "Touch bei Pixel-Koordinaten: X=" + x + ", Y=" + y);
 
+            // 2) Umrechnen in reihen und spalten.
             int spalte = (int) (x / zellenGroesse);
             int reihe  = (int) (y / zellenGroesse);
 
@@ -233,22 +235,22 @@ public class GameView extends View{
 
             invalidate(); // View neu zeichnen
 
+            // 3) (Optional) Entfernen von individuellen Formen. Momentan deaktiviert, da unzuverlässig.
             boolean codeAbschnittIstAktiv = false;
             if (codeAbschnittIstAktiv) {
                 spielfeld.removeForm(spielfeld.getGridPointValue(spalte, reihe));
             } else {
-                // Neu: über Palette angeklickte Form holen
+                // 4) Aktuell angeklickte Form von formPaletteView erfragen
                 if (formPaletteView != null && formPaletteView.getAngeklickteForm() != null) {
                     Form aktuelleForm = formPaletteView.getAngeklickteForm();
 
-                    // Prüfen ob Form noch verfügbar ist und platzierbar
-                    if (aktuelleForm.getVerbleibendeAnzahl() > 0 &&
-                            spielfeld.canPlace(aktuelleForm, reihe, spalte)) {
+                    // 5) Prüfung und anschließendes platzieren der Form
+                    if (aktuelleForm.getVerbleibendeAnzahl() > 0 &&               // Wurde die Form noch nicht zu oft platziert?
+                            spielfeld.canPlace(aktuelleForm, reihe, spalte)) {   // sind die Felder noch unbelegt und komplett innerhalb des Spielfelds?
 
-                        // Platzieren
-                        spielfeld.placeForm(aktuelleForm, reihe, spalte);
+                        spielfeld.placeForm(aktuelleForm, reihe, spalte);      // Platzieren
 
-                        // Verbleibende Anzahl reduzieren & Palette aktualisieren
+                        // 6) Verbleibende Anzahl reduzieren & Palette aktualisieren
                         if (formManager != null) {
                             formManager.decrement(aktuelleForm);
                         }
