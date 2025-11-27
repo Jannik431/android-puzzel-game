@@ -24,7 +24,11 @@ Ziel ist es, alle Formen korrekt im Spielfeld anzuordnen, ohne dass Lücken ents
 3.  App auf Emulator oder Android-Gerät starten.
 
 ## 📸 Screenshots
-![Startscreen](screenshots/screen1.png)
-![Gameplay Level 1](screenshots/screen2.png)
-![Gameplay Level 3](screenshots/screen3.png)
-![Victory Screen](screenshots/screen4.png)
+<p>
+   <img src="screenshots/screen1.png" width="250"/>
+   <img src="screenshots/screen2.png" width="250"/>
+</p>
+<p>
+   <img src="screenshots/screen3.png width="250"/>
+   <img src="screenshots/screen4.png width="250"/>
+</p>
