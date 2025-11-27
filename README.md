@@ -29,6 +29,6 @@ Ziel ist es, alle Formen korrekt im Spielfeld anzuordnen, ohne dass Lücken ents
    <img src="screenshots/screen2.png" width="250"/>
 </p>
 <p>
-   <img src="screenshots/screen3.png width="250"/>
-   <img src="screenshots/screen4.png width="250"/>
+   <img src="screenshots/screen3.png" width="250"/>
+   <img src="screenshots/screen4.png" width="250"/>
 </p>
