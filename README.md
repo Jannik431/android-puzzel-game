@@ -8,7 +8,6 @@ Ziel ist es, alle Formen korrekt im Spielfeld anzuordnen, ohne dass Lücken ents
 * **🧠 Logik-basiertes Spielprinzip** Das Spiel nutzt ein 2D-Array, um belegte und freie Felder zu verwalten.
 * **🔄 Kollisionserkennung & Platzprüfung:** Die App prüft automatisch, ob eine Form korrekt gesetzt werden kann.
 * **📐 Variation der Formen** Unterschiedliche Blöcke ähnlich wie bei Tetris, aber mit Puzzle-Charakter.
-* **UX:** Intuitive Slider-Steuerung für schnelle tägliche Eingaben.
 
 ## 🛠 Technische Details
 * **Entwicklungsumgebung:** Android Studio
